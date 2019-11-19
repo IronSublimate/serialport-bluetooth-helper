@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>icon.jpg</file>
+        <file>icon_128.ico</file>
+        <file>icon.png</file>
+        <file>loading.jpg</file>
+        <file>application-exit.png</file>
+        <file>clear.png</file>
+        <file>connect.png</file>
+        <file>disconnect.png</file>
+        <file>settings.png</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file>style/style_2.qss</file>
+        <file>style/AMOLED.qss</file>
+        <file>style/Aqua.qss</file>
+        <file>style/ConsoleStyle.qss</file>
+        <file>style/ElegantDark.qss</file>
+        <file>style/MaterialDark.qss</file>
+        <file>style/Ubuntu.qss</file>
+        <file>style/style_light_blue.qss</file>
+    </qresource>
+</RCC>
