@@ -5,11 +5,12 @@
 #include <QByteArray>
 #include <QMap>
 #include <QBitmap>
+#include "chatclient.h"
 
 class QIODevice;
 class MainWindow;
 class QSerialPort;
-class IODevice:public QObject
+class IODevice:public ChatClient
 {
     Q_OBJECT
 

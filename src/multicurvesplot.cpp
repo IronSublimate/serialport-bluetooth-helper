@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QTime>
 #include <QtGlobal>
+#include <ciso646>
 
 static inline QColor generateColor(){
     return QColor(qrand()%256,qrand()%256,qrand()%256);

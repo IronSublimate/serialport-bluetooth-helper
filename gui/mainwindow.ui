@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Qt5 波形发生器调试助手</string>
+   <string>Serial Port &amp; Bluethooth Helper</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/res.qrc">
@@ -805,7 +805,6 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Connection</string>
     </property>
     <addaction name="action_Uart"/>
-    <addaction name="action_Bluetooth"/>
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
    </widget>
@@ -870,10 +869,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Uart Ctrl+U</string>
+    <string>&amp;Config Ctrl+U</string>
    </property>
    <property name="toolTip">
-    <string>Uart Ctrl+U</string>
+    <string>Config Serial Port or Bluetooth</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+U</string>
@@ -885,14 +884,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
-   </property>
-  </action>
-  <action name="action_Bluetooth">
-   <property name="text">
-    <string>&amp;Bluetooth</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+B</string>
    </property>
   </action>
   <action name="actionConnect">

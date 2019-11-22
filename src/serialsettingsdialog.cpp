@@ -52,11 +52,19 @@
 #include "serialsettingsdialog.h"
 #include "ui_serialsettingsdialog.h"
 
+#include <QtBluetooth/qbluetoothlocaldevice.h>
+#include <QtBluetooth/qbluetoothservicediscoveryagent.h>
+
 #include <QIntValidator>
 #include <QLineEdit>
 #include <QSerialPortInfo>
 
 static const char blankString[] = QT_TRANSLATE_NOOP("SettingsDialog", "N/A");
+
+static const QLatin1String serviceUuid("00001101-0000-1000-8000-00805F9B34FB");
+#ifdef Q_OS_ANDROID
+static const QLatin1String reverseUuid("FB349B5F-8000-0080-0010-000001110000");
+#endif
 
 SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -69,6 +77,9 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
 #endif
     m_ui->baudRateBox->setInsertPolicy(QComboBox::NoInsert);
 
+    findBluetoothLoacalAdapter();
+    m_discoveryAgent = new QBluetoothServiceDiscoveryAgent(this);
+
     connect(m_ui->applyButton, &QPushButton::clicked,
             this, &SerialSettingsDialog::apply);
     connect(m_ui->serialPortInfoListBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -77,6 +88,10 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
             this, &SerialSettingsDialog::checkCustomBaudRatePolicy);
     connect(m_ui->serialPortInfoListBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &SerialSettingsDialog::checkCustomDevicePathPolicy);
+    connect(m_discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
+            this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
+    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
 
     fillPortsParameters();
     fillPortsInfo();
@@ -87,6 +102,7 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
 SerialSettingsDialog::~SerialSettingsDialog()
 {
     delete m_ui;
+    delete m_discoveryAgent;
 }
 
 SerialSettingsDialog::Settings SerialSettingsDialog::settings() const
@@ -112,6 +128,9 @@ void SerialSettingsDialog::apply()
 {
     updateSettings();
     hide();
+    if (m_discoveryAgent->isActive()){
+        m_discoveryAgent->stop();
+    }
 }
 
 void SerialSettingsDialog::checkCustomBaudRatePolicy(int idx)
@@ -193,31 +212,180 @@ void SerialSettingsDialog::fillPortsInfo()
 
 void SerialSettingsDialog::updateSettings()
 {
-    m_currentSettings.name = m_ui->serialPortInfoListBox->currentText();
+    m_currentSettings.portType = Type(m_ui->tabWidget->currentIndex());
 
+    m_currentSettings.name = m_ui->serialPortInfoListBox->currentText();
     if (m_ui->baudRateBox->currentIndex() == 4) {
         m_currentSettings.baudRate = m_ui->baudRateBox->currentText().toInt();
     } else {
         m_currentSettings.baudRate = static_cast<QSerialPort::BaudRate>(
-                    m_ui->baudRateBox->itemData(m_ui->baudRateBox->currentIndex()).toInt());
+                                         m_ui->baudRateBox->itemData(m_ui->baudRateBox->currentIndex()).toInt());
     }
     m_currentSettings.stringBaudRate = QString::number(m_currentSettings.baudRate);
-
     m_currentSettings.dataBits = static_cast<QSerialPort::DataBits>(
-                m_ui->dataBitsBox->itemData(m_ui->dataBitsBox->currentIndex()).toInt());
+                                     m_ui->dataBitsBox->itemData(m_ui->dataBitsBox->currentIndex()).toInt());
     m_currentSettings.stringDataBits = m_ui->dataBitsBox->currentText();
 
     m_currentSettings.parity = static_cast<QSerialPort::Parity>(
-                m_ui->parityBox->itemData(m_ui->parityBox->currentIndex()).toInt());
+                                   m_ui->parityBox->itemData(m_ui->parityBox->currentIndex()).toInt());
     m_currentSettings.stringParity = m_ui->parityBox->currentText();
 
     m_currentSettings.stopBits = static_cast<QSerialPort::StopBits>(
-                m_ui->stopBitsBox->itemData(m_ui->stopBitsBox->currentIndex()).toInt());
+                                     m_ui->stopBitsBox->itemData(m_ui->stopBitsBox->currentIndex()).toInt());
     m_currentSettings.stringStopBits = m_ui->stopBitsBox->currentText();
 
     m_currentSettings.flowControl = static_cast<QSerialPort::FlowControl>(
-                m_ui->flowControlBox->itemData(m_ui->flowControlBox->currentIndex()).toInt());
+                                        m_ui->flowControlBox->itemData(m_ui->flowControlBox->currentIndex()).toInt());
     m_currentSettings.stringFlowControl = m_ui->flowControlBox->currentText();
 
     m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
+
+    //Bluetooth
+
+    m_currentSettings.m_service=m_discoveredServices.value(this->m_ui->remoteDevices->currentItem());
+}
+
+void SerialSettingsDialog::findBluetoothLoacalAdapter()
+{
+    localAdapters = QBluetoothLocalDevice::allDevices();
+    if (localAdapters.count() < 2) {
+        m_ui->localAdapterBox->setVisible(false);
+    } else {
+        //we ignore more than two adapters
+        m_ui->localAdapterBox->setVisible(true);
+        m_ui->firstAdapter->setText(tr("Default (%1)", "%1 = Bluetooth address").
+                                  arg(localAdapters.at(0).address().toString()));
+        m_ui->secondAdapter->setText(localAdapters.at(1).address().toString());
+        m_ui->firstAdapter->setChecked(true);
+        connect(m_ui->firstAdapter, &QRadioButton::clicked, this, &SerialSettingsDialog::newAdapterSelected);
+        connect(m_ui->secondAdapter, &QRadioButton::clicked, this, &SerialSettingsDialog::newAdapterSelected);
+        QBluetoothLocalDevice adapter(localAdapters.at(0).address());
+        adapter.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+    }
+    m_currentSettings.localName = QBluetoothLocalDevice().name();
+}
+
+int SerialSettingsDialog::adapterFromUserSelection() const
+{
+    int result = 0;
+    QBluetoothAddress newAdapter = localAdapters.at(0).address();
+
+    if (m_ui->secondAdapter->isChecked()) {
+        newAdapter = localAdapters.at(1).address();
+        result = 1;
+    }
+    return result;
+}
+
+void SerialSettingsDialog::on_pushButton_Refresh_clicked()
+{
+    this->fillPortsInfo();
+}
+
+
+void SerialSettingsDialog::startDiscovery(const QBluetoothUuid &uuid)
+{
+    m_ui->status->setText(tr("Scanning..."));
+    if (m_discoveryAgent->isActive())
+        m_discoveryAgent->stop();
+
+    m_ui->remoteDevices->clear();
+
+    m_discoveryAgent->setUuidFilter(uuid);
+    m_discoveryAgent->start(QBluetoothServiceDiscoveryAgent::FullDiscovery);
+
+}
+
+void SerialSettingsDialog::stopDiscovery()
+{
+    if (m_discoveryAgent){
+        m_discoveryAgent->stop();
+    }
+}
+
+QBluetoothServiceInfo SerialSettingsDialog::service() const
+{
+    return m_currentSettings.m_service;
+}
+
+void SerialSettingsDialog::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
+{
+#if 0
+    qDebug() << "Discovered service on"
+             << serviceInfo.device().name() << serviceInfo.device().address().toString();
+    qDebug() << "\tService name:" << serviceInfo.serviceName();
+    qDebug() << "\tDescription:"
+             << serviceInfo.attribute(QBluetoothServiceInfo::ServiceDescription).toString();
+    qDebug() << "\tProvider:"
+             << serviceInfo.attribute(QBluetoothServiceInfo::ServiceProvider).toString();
+    qDebug() << "\tL2CAP protocol service multiplexer:"
+             << serviceInfo.protocolServiceMultiplexer();
+    qDebug() << "\tRFCOMM server channel:" << serviceInfo.serverChannel();
+#endif
+    QMapIterator<QListWidgetItem *, QBluetoothServiceInfo> i(m_discoveredServices);
+    while (i.hasNext()){
+        i.next();
+        if (serviceInfo.device().address() == i.value().device().address()){
+            return;
+        }
+    }
+
+    QString remoteName;
+    if (serviceInfo.device().name().isEmpty())
+        remoteName = serviceInfo.device().address().toString();
+    else
+        remoteName = serviceInfo.device().name();
+
+    QListWidgetItem *item =
+        new QListWidgetItem(QString::fromLatin1("%1 %2").arg(remoteName,
+                                                             serviceInfo.serviceName()));
+
+    m_discoveredServices.insert(item, serviceInfo);
+    m_ui->remoteDevices->addItem(item);
+}
+
+void SerialSettingsDialog::discoveryFinished()
+{
+    m_ui->status->setText(tr("Select the chat service to connect to."));
+}
+
+void SerialSettingsDialog::newAdapterSelected()
+{
+    const int newAdapterIndex = adapterFromUserSelection();
+    if (m_currentSettings.currentAdapterIndex != newAdapterIndex) {
+//        server->stopServer();
+        m_currentSettings.currentAdapterIndex = newAdapterIndex;
+        const QBluetoothHostInfo info = localAdapters.at(m_currentSettings.currentAdapterIndex);
+        QBluetoothLocalDevice adapter(info.address());
+        adapter.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+//        server->startServer(info.address());
+        m_currentSettings.localName = info.name();
+    }
+}
+
+void SerialSettingsDialog::on_remoteDevices_itemActivated(QListWidgetItem *item)
+{
+    qDebug() << "got click" << item->text();
+    m_currentSettings.m_service = m_discoveredServices.value(item);
+//    if (m_discoveryAgent->isActive()){
+//        m_discoveryAgent->stop();
+//    }
+    //accept();
+}
+
+void SerialSettingsDialog::on_pushButton_RefreshBluetooth_clicked()
+{
+    const QBluetoothAddress adapterAdress = localAdapters.isEmpty() ?
+                                           QBluetoothAddress() :
+                                           localAdapters.at(m_currentSettings.currentAdapterIndex).address();
+    m_discoveryAgent->setRemoteAddress(adapterAdress);
+#ifdef Q_OS_ANDROID
+    if (QtAndroid::androidSdkVersion() >= 23)
+        this->startDiscovery(QBluetoothUuid(reverseUuid));
+    else
+        this->startDiscovery(QBluetoothUuid(serviceUuid));
+#else
+    this->startDiscovery(QBluetoothUuid(serviceUuid));
+#endif
+
 }

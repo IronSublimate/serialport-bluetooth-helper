@@ -60,9 +60,13 @@ private:
     Ui::MainWindow *ui;
 
     DialogSkin* skinConfig = nullptr;
-    const QString version=tr("1.1.0");
+    const QString version="1.1.0";
     const QString about_this_title=tr("SerialPort-Bluetooth-helper");
-    const QString about_this_text=tr("版本：")+this->version+tr("\n作者：侯宇轩");
+    const QString author=tr("Hou Yuxuan");
+    const QString version_str=tr("Version: ");
+    const QString author_str=tr("Author: ");
+    const QString source_code_str=tr("Source Code: ");
+    const QString source_code_address="https://github.com/IronSublimate/serialport-bluetooth-helper";
     //QIODevice* device = nullptr;
     IODevice iodevice;
     //SerialSettingsDialog* uartConfig = nullptr;
@@ -103,6 +107,9 @@ private slots:
     void on_pushButton_anticlock_clicked();
     void on_pushButton_clock_clicked();
     void on_pushButton_readMCU_clicked();
+    void on_action_Uart_triggered();
+    void on_actionAboutThis_triggered();
+    void on_actionAbout_Qt_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -37,25 +37,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusbar->addWidget(m_status);
 
     create_signal_slots();
-    //Action
-//    connect(ui->actionAboutThis,&QAction::triggered,
-//            [this](){QMessageBox::about(this,this->about_this_title,this->about_this_text);});
-//    connect(ui->actionAbout_Qt,&QAction::triggered,
-//            [this](){QMessageBox::aboutQt(this);});
-    connect(ui->action_Uart, &QAction::triggered, uartConfig, &SerialSettingsDialog::show);
-    //connect(ui->action_Uart,&QAction::triggered,this,&MainWindow::on_action_exit_triggered);
-
-    //connect(ui->action_Open_Close,&QAction::triggered,this,&MainWindow::on_action_Open_Close_triggered);
-    //connect(ui->action,&QAction::triggered,this,&MainWindow::on_action_Bluetooth_triggered);
-
     this->set_control_enable(false);
 
 }
 
 void MainWindow::create_signal_slots()
 {
-    //connect(this->iodevice.device,&QIODevice::readyRead,this,&MainWindow::com_receive_data);
-    connect(this->ui->pushButton_readMCU,&QPushButton::clicked,&this->iodevice,&IODevice::send_read_mcu);
     connect(this->ui->checkBox_showGrid,&QCheckBox::stateChanged,this->ui->label_img,&WidgetPainter::set_enable_grid);
     connect(this->ui->pushButton_saveImg,&QPushButton::clicked,this->ui->label_img,&WidgetPainter::saveImg);
     connect(this->ui->pushButton_clear_dict,&QPushButton::clicked,this,&MainWindow::on_clear_dict);
@@ -392,4 +379,27 @@ void MainWindow::on_pushButton_clock_clicked()
 void MainWindow::on_pushButton_readMCU_clicked()
 {
     this->iodevice.send_read_mcu();
+}
+
+void MainWindow::on_action_Uart_triggered()
+{
+//    uartConfig->fillPortsInfo();
+    uartConfig->show();
+}
+
+void MainWindow::on_actionAboutThis_triggered()
+{
+    QMessageBox::about(this,this->about_this_title,
+                       QString("<p>")+
+                       this->author_str+this->author+"<br/>"+
+                       this->version_str+this->version+
+                       QString("QCustomPlot Version:")+QCUSTOMPLOT_VERSION_STR+
+                       QString("</p>")+
+                       this->source_code_str+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>"
+                       );
+}
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+    QMessageBox::aboutQt(this);
 }

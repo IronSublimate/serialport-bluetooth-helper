@@ -54,7 +54,8 @@
 
 #include <QDialog>
 #include <QSerialPort>
-
+#include <QtBluetooth/qbluetoothlocaldevice.h>
+#include <QBluetoothServiceInfo>
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
@@ -64,6 +65,11 @@ class SettingsDialog;
 class QIntValidator;
 
 QT_END_NAMESPACE
+
+class QBluetoothServiceInfo;
+class QBluetoothServiceDiscoveryAgent;
+class QListWidgetItem;
+class QBluetoothUuid;
 
 class SerialSettingsDialog : public QDialog
 {
@@ -88,29 +94,55 @@ public:
         QSerialPort::FlowControl flowControl;
         QString stringFlowControl;
         bool localEchoEnabled;
-        Type m_type = SerialPort;
+        Type portType = SerialPort;
+
+        //bluetooth
+        int currentAdapterIndex = 0;
+        QString localName;
+        QBluetoothServiceInfo m_service;
     };
 
     explicit SerialSettingsDialog(QWidget *parent = nullptr);
     ~SerialSettingsDialog();
 
     Settings settings() const;
+    void startDiscovery(const QBluetoothUuid &uuid);
+    void stopDiscovery();
+    QBluetoothServiceInfo service() const;
 
 private slots:
     void showPortInfo(int idx);
     void apply();
     void checkCustomBaudRatePolicy(int idx);
     void checkCustomDevicePathPolicy(int idx);
+    void serviceDiscovered(const QBluetoothServiceInfo &serviceInfo);
+    void discoveryFinished();
+    void newAdapterSelected();
+
+    void on_remoteDevices_itemActivated(QListWidgetItem *item);
+//    void on_cancelButton_clicked();
+    void on_pushButton_Refresh_clicked();
+
+
+    void on_pushButton_RefreshBluetooth_clicked();
 
 private:
     void fillPortsParameters();
     void fillPortsInfo();
     void updateSettings();
 
+    void findBluetoothLoacalAdapter();
+    int adapterFromUserSelection() const;
+
 private:
     Ui::SettingsDialog *m_ui = nullptr;
     Settings m_currentSettings;
     QIntValidator *m_intValidator = nullptr;
+
+    QBluetoothServiceDiscoveryAgent *m_discoveryAgent;
+
+    QMap<QListWidgetItem *, QBluetoothServiceInfo> m_discoveredServices;
+    QList<QBluetoothHostInfo> localAdapters;
 };
 
 #endif // SETTINGSDIALOG_H

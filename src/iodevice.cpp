@@ -1,8 +1,11 @@
 ﻿#include "iodevice.h"
 #include <QIODevice>
+#include <QBluetoothServiceInfo>
+#include <QBluetoothDeviceInfo>
 #include <QSerialPort>
 #include "serialsettingsdialog.h"
 #include "mainwindow.h"
+#include <ciso646>
 
 IODevice::IODevice(MainWindow* parent)
 {
@@ -73,7 +76,7 @@ void IODevice::sendVectorControlMessage(qreal x, qreal y, int speed)
 void IODevice::send_read_mcu()
 {
     if(this->device and this->device->isOpen()){
-        QByteArray start("\xb3\x00");
+        QByteArray start("\xb3\x00",2);
         this->device->write(start);
     }
 }
@@ -81,7 +84,7 @@ void IODevice::send_read_mcu()
 bool IODevice::openDevice()
 {
     const SerialSettingsDialog::Settings p = parent->uartConfig->settings();
-    if(p.m_type==SerialSettingsDialog::SerialPort){
+    if(p.portType==SerialSettingsDialog::SerialPort){
 
         m_serial->setPortName(p.name);
         m_serial->setBaudRate(p.baudRate);
@@ -98,8 +101,28 @@ bool IODevice::openDevice()
         } else {
             return false;
         }
-    } else if (p.m_type==SerialSettingsDialog::Bluetooth) {
+    } else if (p.portType==SerialSettingsDialog::Bluetooth) {
+        QBluetoothServiceInfo service=p.m_service;
+        qDebug() << "Connecting to service 2" << service.serviceName()
+                 << "on" << service.device().name();
 
+        // Create client
+        qDebug() << "Going to create client";
+        qDebug() << "Connecting...";
+
+//                connect(client, &ChatClient::messageReceived,
+//                        this, &Chat::showMessage);
+//                connect(client, &ChatClient::disconnected,
+//                        this, QOverload<>::of(&Chat::clientDisconnected));
+//                connect(client, QOverload<const QString &>::of(&ChatClient::connected),
+//                        this, &Chat::connected);
+//                connect(client, &ChatClient::socketErrorOccurred,
+//                        this, &Chat::reactOnSocketError);
+//                connect(this, &Chat::sendMessage, client, &ChatClient::sendMessage);
+        qDebug() << "Start client";
+                this->startClient(service);
+        socket->open(QIODevice::ReadWrite);
+        this->device = socket;
     }
     return true;
 }

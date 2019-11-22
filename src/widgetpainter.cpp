@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QTime>
 #include <QMessageBox>
+#include <ciso646>
 
 WidgetPainter::WidgetPainter(QWidget *parent) : QWidget(parent)
 {

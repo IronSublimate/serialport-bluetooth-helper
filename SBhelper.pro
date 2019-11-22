@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 include (src/qcustomplot/qcustomplot.pri)
-QT       +=  core gui serialport
+
+QT       +=  core gui serialport bluetooth
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,7 +26,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++14
 
 SOURCES += \
-        src/bluetoothdialog.cpp \
         src/dialogskin.cpp \
         src/iodevice.cpp \
         src/main.cpp \
@@ -36,10 +36,10 @@ SOURCES += \
         src/serialsettingsdialog.cpp \
         src/widgetloading.cpp \
         src/widgetpainter.cpp \
-        src/widgetparaitem.cpp
+        src/widgetparaitem.cpp\
+        src/chatclient.cpp
 
 HEADERS += \
-        src/bluetoothdialog.h \
         src/dialogskin.h \
         src/iodevice.h \
         src/mainwindow.h \
@@ -47,13 +47,13 @@ HEADERS += \
         src/multicurvesplotprivate.h \
         src/rudder.h \
         src/serialsettingsdialog.h \
-        src/uartconfigdialog.h \
+#        src/uartconfigdialog.h \
         src/widgetloading.h \
         src/widgetpainter.h \
-        src/widgetparaitem.h
+        src/widgetparaitem.h\
+        src/chatclient.h
 
 FORMS += \
-        gui/bluetoothdialog.ui \
         gui/dialogskin.ui \
         gui/mainwindow.ui \
         gui/serialsettingsdialog.ui \
