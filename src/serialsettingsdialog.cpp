@@ -58,6 +58,10 @@
 #include <QIntValidator>
 #include <QLineEdit>
 #include <QSerialPortInfo>
+#include <ciso646>
+#ifdef Q_OS_ANDROID
+#include <QtAndroidExtras>
+#endif
 
 static const char blankString[] = QT_TRANSLATE_NOOP("SettingsDialog", "N/A");
 
@@ -78,7 +82,7 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
     m_ui->baudRateBox->setInsertPolicy(QComboBox::NoInsert);
 
     findBluetoothLoacalAdapter();
-    m_discoveryAgent = new QBluetoothServiceDiscoveryAgent(this);
+//    m_discoveryAgent = new QBluetoothServiceDiscoveryAgent(this);
 
     connect(m_ui->applyButton, &QPushButton::clicked,
             this, &SerialSettingsDialog::apply);
@@ -88,10 +92,10 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
             this, &SerialSettingsDialog::checkCustomBaudRatePolicy);
     connect(m_ui->serialPortInfoListBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &SerialSettingsDialog::checkCustomDevicePathPolicy);
-    connect(m_discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
-            this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
-    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
-    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
+//    connect(m_discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
+//            this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
+//    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+//    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
 
     fillPortsParameters();
     fillPortsInfo();
@@ -128,7 +132,7 @@ void SerialSettingsDialog::apply()
 {
     updateSettings();
     hide();
-    if (m_discoveryAgent->isActive()){
+    if (m_discoveryAgent and m_discoveryAgent->isActive()){
         m_discoveryAgent->stop();
     }
 }
@@ -285,10 +289,13 @@ void SerialSettingsDialog::on_pushButton_Refresh_clicked()
 
 void SerialSettingsDialog::startDiscovery(const QBluetoothUuid &uuid)
 {
+    if(not m_discoveryAgent){
+        return;
+    }
     m_ui->status->setText(tr("Scanning..."));
-    if (m_discoveryAgent->isActive())
+    if (m_discoveryAgent->isActive()) {
         m_discoveryAgent->stop();
-
+    }
     m_ui->remoteDevices->clear();
 
     m_discoveryAgent->setUuidFilter(uuid);
@@ -298,7 +305,7 @@ void SerialSettingsDialog::startDiscovery(const QBluetoothUuid &uuid)
 
 void SerialSettingsDialog::stopDiscovery()
 {
-    if (m_discoveryAgent){
+    if (m_discoveryAgent and m_discoveryAgent){
         m_discoveryAgent->stop();
     }
 }
@@ -378,7 +385,14 @@ void SerialSettingsDialog::on_pushButton_RefreshBluetooth_clicked()
     const QBluetoothAddress adapterAdress = localAdapters.isEmpty() ?
                                            QBluetoothAddress() :
                                            localAdapters.at(m_currentSettings.currentAdapterIndex).address();
-    m_discoveryAgent->setRemoteAddress(adapterAdress);
+    if(m_discoveryAgent){
+        delete m_discoveryAgent;
+    }
+    m_discoveryAgent = new QBluetoothServiceDiscoveryAgent(adapterAdress,this);
+    connect(m_discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
+            this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
+    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
 #ifdef Q_OS_ANDROID
     if (QtAndroid::androidSdkVersion() >= 23)
         this->startDiscovery(QBluetoothUuid(reverseUuid));

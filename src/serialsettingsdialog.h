@@ -139,7 +139,7 @@ private:
     Settings m_currentSettings;
     QIntValidator *m_intValidator = nullptr;
 
-    QBluetoothServiceDiscoveryAgent *m_discoveryAgent;
+    QBluetoothServiceDiscoveryAgent *m_discoveryAgent = nullptr;
 
     QMap<QListWidgetItem *, QBluetoothServiceInfo> m_discoveredServices;
     QList<QBluetoothHostInfo> localAdapters;
