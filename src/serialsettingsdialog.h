@@ -82,6 +82,8 @@ public:
         NoneType = -1,
     };
     struct Settings {
+        bool finishedSetting = false; // 完成设置
+        //Serial port
         QString name;
         qint32 baudRate;
         QString stringBaudRate;
@@ -143,6 +145,8 @@ private:
 
     QMap<QListWidgetItem *, QBluetoothServiceInfo> m_discoveredServices;
     QList<QBluetoothHostInfo> localAdapters;
+
+    bool foundDevice();
 };
 
 #endif // SETTINGSDIALOG_H

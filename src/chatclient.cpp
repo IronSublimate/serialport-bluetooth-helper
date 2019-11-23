@@ -55,11 +55,13 @@
 ChatClient::ChatClient(QObject *parent)
     :   QObject(parent)
 {
+    socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 }
 
 ChatClient::~ChatClient()
 {
     stopClient();
+    delete socket;
 }
 
 //! [startClient]
@@ -69,7 +71,7 @@ void ChatClient::startClient(const QBluetoothServiceInfo &remoteService)
         return;
 
     // Connect to service
-    socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+
     qDebug() << "Create socket";
     socket->connectToService(remoteService);
     qDebug() << "ConnectToService done";

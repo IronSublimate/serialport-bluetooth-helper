@@ -19,7 +19,7 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_serialport">
       <attribute name="title">
        <string>Serial Port</string>
       </attribute>
@@ -172,7 +172,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_bluetooth">
       <attribute name="title">
        <string>Bluetooth</string>
       </attribute>
@@ -206,7 +206,7 @@
        <item row="1" column="0">
         <widget class="QLabel" name="status">
          <property name="text">
-          <string>Scanning...</string>
+          <string>Click Scan to find bluetooth</string>
          </property>
         </widget>
        </item>
@@ -219,7 +219,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Refresh</string>
+          <string>Scan</string>
          </property>
         </widget>
        </item>

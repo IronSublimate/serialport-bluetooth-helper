@@ -4,6 +4,7 @@
 #include <QMainWindow>
 //#include <QTimer>
 #include "iodevice.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -60,7 +61,7 @@ private:
     Ui::MainWindow *ui;
 
     DialogSkin* skinConfig = nullptr;
-    const QString version="1.1.0";
+    const QString version=APP_VERSION;
     const QString about_this_title=tr("SerialPort-Bluetooth-helper");
     const QString author=tr("Hou Yuxuan");
     const QString version_str=tr("Version: ");
@@ -93,6 +94,7 @@ private:
 private slots:
     void on_clear_dict();
     void update_standard_gui(int index_receive);
+    void on_control_key_release();
 
     void on_tabWidget_other_currentChanged(int index);
     void on_pushButton_StartStop_clicked();
@@ -100,12 +102,12 @@ private slots:
     void on_checkBox_manual_stateChanged(int arg1);
     void on_pushButton_stop_clicked();
 
-    void on_pushButton_forward_clicked();
-    void on_pushButton_back_clicked();
-    void on_pushButton_left_clicked();
-    void on_pushButton_right_clicked();
-    void on_pushButton_anticlock_clicked();
-    void on_pushButton_clock_clicked();
+    void on_pushButton_forward_pressed();
+    void on_pushButton_back_pressed();
+    void on_pushButton_left_pressed();
+    void on_pushButton_right_pressed();
+    void on_pushButton_anticlock_pressed();
+    void on_pushButton_clock_pressed();
     void on_pushButton_readMCU_clicked();
     void on_action_Uart_triggered();
     void on_actionAboutThis_triggered();

@@ -79,6 +79,7 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     m_ui->selectBox->setVisible(false);
 #endif
+    m_ui->additionalOptionsGroupBox->setVisible(false);
     m_ui->baudRateBox->setInsertPolicy(QComboBox::NoInsert);
 
     findBluetoothLoacalAdapter();
@@ -130,6 +131,9 @@ void SerialSettingsDialog::showPortInfo(int idx)
 
 void SerialSettingsDialog::apply()
 {
+    if(not m_currentSettings.finishedSetting){
+        m_currentSettings.finishedSetting = this->foundDevice();
+    }
     updateSettings();
     hide();
     if (m_discoveryAgent and m_discoveryAgent->isActive()){
@@ -281,6 +285,23 @@ int SerialSettingsDialog::adapterFromUserSelection() const
     return result;
 }
 
+bool SerialSettingsDialog::foundDevice()
+{
+    if(this->m_ui->tabWidget->currentIndex()==Type::SerialPort){
+        if(this->m_ui->serialPortInfoListBox->currentIndex()<0){
+            return false;
+        } else{
+            return true;
+        }
+    } else if(this->m_ui->tabWidget->currentIndex()==Type::Bluetooth){
+        if(this->m_discoveredServices.isEmpty()){//存设备的字典为空说明没找到
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 void SerialSettingsDialog::on_pushButton_Refresh_clicked()
 {
     this->fillPortsInfo();
@@ -289,6 +310,7 @@ void SerialSettingsDialog::on_pushButton_Refresh_clicked()
 
 void SerialSettingsDialog::startDiscovery(const QBluetoothUuid &uuid)
 {
+    m_discoveredServices.clear();
     if(not m_discoveryAgent){
         return;
     }

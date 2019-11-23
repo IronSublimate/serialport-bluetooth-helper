@@ -6,8 +6,9 @@
 #include "serialsettingsdialog.h"
 #include "mainwindow.h"
 #include <ciso646>
+#include <cstdint>
 
-IODevice::IODevice(MainWindow* parent)
+IODevice::IODevice(MainWindow* parent):ChatClient(parent)
 {
     this->parent = parent;
     this->m_serial = new QSerialPort(this);
@@ -120,8 +121,9 @@ bool IODevice::openDevice()
 //                        this, &Chat::reactOnSocketError);
 //                connect(this, &Chat::sendMessage, client, &ChatClient::sendMessage);
         qDebug() << "Start client";
-                this->startClient(service);
-        socket->open(QIODevice::ReadWrite);
+//        this->startClient(service);
+//        socket->open(QIODevice::ReadWrite);
+        socket->connectToService(service);
         this->device = socket;
     }
     return true;
@@ -148,7 +150,6 @@ void IODevice::com_send_data(const QString &tx_data, bool is_hex,const QString &
             this->device->write(tx_data.toLocal8Bit());
         }
     } else {
-        //TODO
         auto hex_data = tx_data.split(' ',QString::SplitBehavior::SkipEmptyParts);
         QByteArray byteArray;
         for (const auto& s : hex_data) {
@@ -194,7 +195,7 @@ void IODevice::com_receive_standard()
             this->standard_rx_data.remove(0,1);
             break;
         }
-        qint8 msg = static_cast<qint8>(this->standard_rx_data[0]);
+        uint8_t msg = static_cast<uint8_t>(this->standard_rx_data[0]);
         auto standard_rx_data_temp = QByteArray(this->standard_rx_data.data()+1,index-1);
 //        this->standard_rx_data=QByteArray(this->standard_rx_data.begin()+index+1);
         this->standard_rx_data.remove(0,index+1);
@@ -204,23 +205,25 @@ void IODevice::com_receive_standard()
         }
 
         auto list_of_msg = standard_rx_data_temp.split('\n');
+        //qDebug()<<list_of_msg;
         switch (msg) {
-        case '\xa0':// 看参数模式
+        case uint8_t(0xa0):// 看参数模式
             this->add_to_dict(this->watch_paras,list_of_msg);
             emit this->signal_update_standard_gui(0);
             break;
-        case '\xa8':// 波形模式
+        case uint8_t(0xa8):// 波形模式
             this->add_to_dict(this->wave_paras,list_of_msg);
             this->signal_update_standard_gui(1);
             break;
-        case '\xb2':// 改参数模式，读取参数
+        case uint8_t(0xb2):// 改参数模式，读取参数
             this->add_to_dict(this->change_paras,list_of_msg);
             this->signal_update_standard_gui(2);
             break;
-        case '\xb0':// 改参数模式，成功修改参数
+        case uint8_t(0xb0):// 改参数模式，成功修改参数
             this->signal_update_standard_gui(-1);
             break;
         default:
+            qDebug()<<msg;
             break;
         }
     }

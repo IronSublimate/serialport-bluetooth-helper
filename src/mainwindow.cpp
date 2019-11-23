@@ -50,6 +50,14 @@ void MainWindow::create_signal_slots()
         this->iodevice.sendVectorControlMessage(x,y,this->ui->horizontalSlider_speed->value()*100);
     });
     connect(&this->iodevice,&IODevice::signal_update_standard_gui,this,&MainWindow::update_standard_gui);
+
+    //release control keys
+    connect(this->ui->pushButton_forward,&QPushButton::released,this,&MainWindow::on_control_key_release);
+    connect(this->ui->pushButton_back,&QPushButton::released,this,&MainWindow::on_control_key_release);
+    connect(this->ui->pushButton_left,&QPushButton::released,this,&MainWindow::on_control_key_release);
+    connect(this->ui->pushButton_right,&QPushButton::released,this,&MainWindow::on_control_key_release);
+    connect(this->ui->pushButton_clock,&QPushButton::released,this,&MainWindow::on_control_key_release);
+    connect(this->ui->pushButton_anticlock,&QPushButton::released,this,&MainWindow::on_control_key_release);
 }
 
 void MainWindow::set_control_enable(bool enable)
@@ -151,6 +159,11 @@ void MainWindow::update_standard_gui(int index_receive)
     }
 }
 
+void MainWindow::on_control_key_release()
+{
+    this->iodevice.sendControlMessage(stop,0);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -236,6 +249,7 @@ void MainWindow::on_action_exit_triggered()
 
 void MainWindow::com_receive_data(){
     auto tab_widget_current_index = ui->tabWidget->currentIndex();
+//    qDebug()<<tab_widget_current_index;
     if(tab_widget_current_index == 0){//收发模式
         auto msg = this->iodevice.com_receive_normal( ui->hexShowing_checkBox->isChecked(),
                            ui->comboBox_codetype->currentText());
@@ -256,12 +270,19 @@ void MainWindow::com_receive_data(){
 void MainWindow::on_actionConnect_triggered(bool checked)
 {
     qDebug()<<checked;
+    if(not this->uartConfig->settings().finishedSetting){//没有设置
+        this->m_status->setText(tr("Please Config before connect!"));
+        ui->actionConnect->setChecked(false);
+        return;
+    }
     if(checked){//打开
+        this->m_status->setText(tr("Connecting..."));
         if(iodevice.openDevice()){
             ui->actionConnect->setText(tr("Disconnect"));
             on_device_open();
         } else { //没打开
             ui->actionConnect->setChecked(false);
+            this->m_status->setText(tr("Connect failed!"));
         }
     } else {//关闭
         iodevice.closeDevice();
@@ -333,43 +354,42 @@ void MainWindow::on_checkBox_manual_stateChanged(int arg1)
 
 void MainWindow::on_pushButton_stop_clicked()
 {
-    this->iodevice.sendControlMessage(
-                stop,this->ui->horizontalSlider_speed->value()*100);
+    this->iodevice.sendControlMessage(stop,0);
 }
 
 
 
-void MainWindow::on_pushButton_forward_clicked()
+void MainWindow::on_pushButton_forward_pressed()
 {
     this->iodevice.sendControlMessage(
                 forward,this->ui->horizontalSlider_speed->value()*100);
 }
 
-void MainWindow::on_pushButton_back_clicked()
+void MainWindow::on_pushButton_back_pressed()
 {
     this->iodevice.sendControlMessage(
                 back,this->ui->horizontalSlider_speed->value()*100);
 }
 
-void MainWindow::on_pushButton_left_clicked()
+void MainWindow::on_pushButton_left_pressed()
 {
     this->iodevice.sendControlMessage(
                 left,this->ui->horizontalSlider_speed->value()*100);
 }
 
-void MainWindow::on_pushButton_right_clicked()
+void MainWindow::on_pushButton_right_pressed()
 {
     this->iodevice.sendControlMessage(
                 right,this->ui->horizontalSlider_speed->value()*100);
 }
 
-void MainWindow::on_pushButton_anticlock_clicked()
+void MainWindow::on_pushButton_anticlock_pressed()
 {
     this->iodevice.sendControlMessage(
                 anticlock,this->ui->horizontalSlider_speed->value()*100);
 }
 
-void MainWindow::on_pushButton_clock_clicked()
+void MainWindow::on_pushButton_clock_pressed()
 {
     this->iodevice.sendControlMessage(
                 clock,this->ui->horizontalSlider_speed->value()*100);
@@ -383,20 +403,20 @@ void MainWindow::on_pushButton_readMCU_clicked()
 
 void MainWindow::on_action_Uart_triggered()
 {
-//    uartConfig->fillPortsInfo();
     uartConfig->show();
 }
 
 void MainWindow::on_actionAboutThis_triggered()
 {
-    QMessageBox::about(this,this->about_this_title,
-                       QString("<p>")+
-                       this->author_str+this->author+"<br/>"+
-                       this->version_str+this->version+
-                       QString("QCustomPlot Version:")+QCUSTOMPLOT_VERSION_STR+
-                       QString("</p>")+
-                       this->source_code_str+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>"
-                       );
+    QString about_this_str =
+            QString("<p>")+
+            this->author_str+this->author+"<br/>"+
+            //tr("Copyright: ")+APP_COPYRIGHT+QString("<br/>")+
+            this->version_str+this->version+QString("<br/>")+
+            QString("QCustomPlot Version:")+QCUSTOMPLOT_VERSION_STR+
+            QString("</p>")+
+            this->source_code_str+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>";
+    QMessageBox::about(this,this->about_this_title, about_this_str);
 }
 
 void MainWindow::on_actionAbout_Qt_triggered()
