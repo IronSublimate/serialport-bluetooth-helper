@@ -28,7 +28,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -251,7 +251,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_img">
        <attribute name="title">
-        <string>信号发生器</string>
+        <string>Image</string>
        </attribute>
        <attribute name="whatsThis">
         <string>信号发生器</string>

@@ -291,6 +291,20 @@ void MainWindow::on_actionConnect_triggered(bool checked)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    auto size = event->size();
+    qDebug()<<size;
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
+    if(size.height()>size.width()){
+        change_gui_vertical_screen();
+    } else {
+        change_gui_horizontal_screen();
+    }
+
+#endif
+}
+
 void MainWindow::showStatusMessage(const QString &message)
 {
     m_status->setText(message);
@@ -301,7 +315,7 @@ void MainWindow::change_gui_horizontal_screen()
 {
     ui->widget_key->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     ui->rudder->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-
+    ui->rudder->setAlignment(Qt::AlignCenter);
     delete ui->widget_control->layout();
     auto vlayout = new QVBoxLayout(ui->widget_control);
 
@@ -311,6 +325,26 @@ void MainWindow::change_gui_horizontal_screen()
 
     delete ui->tab_other->layout();
     auto hlayout = new QHBoxLayout(ui->tab_other);
+    hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    hlayout->addWidget(ui->tabWidget_other);
+    hlayout->addWidget(ui->widget_control);
+}
+
+//纵向屏幕的布局
+void MainWindow::change_gui_vertical_screen()
+{
+    ui->widget_key->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    ui->rudder->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    ui->rudder->setAlignment(Qt::AlignCenter);
+    delete ui->widget_control->layout();
+    auto vlayout = new QHBoxLayout(ui->widget_control);
+
+    vlayout->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+    vlayout->addWidget(ui->widget_key);
+    vlayout->addWidget(ui->rudder);
+
+    delete ui->tab_other->layout();
+    auto hlayout = new QVBoxLayout(ui->tab_other);
     hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
     hlayout->addWidget(ui->tabWidget_other);
     hlayout->addWidget(ui->widget_control);

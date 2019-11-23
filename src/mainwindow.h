@@ -57,6 +57,9 @@ private slots:
 
 public:
     SerialSettingsDialog* uartConfig = nullptr;
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+
 private:
     Ui::MainWindow *ui;
 
@@ -87,6 +90,7 @@ private:
     void showStatusMessage(const QString &message);
 
     void change_gui_horizontal_screen();
+    void change_gui_vertical_screen();
     void create_signal_slots();
     void set_control_enable(bool enable);
     void set_GUI_enable(bool enable);

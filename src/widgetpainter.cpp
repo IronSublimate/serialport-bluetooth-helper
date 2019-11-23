@@ -71,7 +71,7 @@ void WidgetPainter::calculate_grid_points()
         x+=pix_width;
     }
     while(y<=this->height()){
-        this->grid_points.append(QLineF(0,y,0,this->width()));
+        this->grid_points.append(QLineF(0,y,this->width(),y));
         y+=pix_height;
     }
 }
