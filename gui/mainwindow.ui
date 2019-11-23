@@ -464,28 +464,13 @@ p, li { white-space: pre-wrap; }
                <bool>true</bool>
               </property>
               <property name="rowCount">
-               <number>1</number>
+               <number>0</number>
               </property>
               <property name="columnCount">
                <number>2</number>
               </property>
-              <row>
-               <property name="text">
-                <string>1</string>
-               </property>
-              </row>
               <column/>
               <column/>
-              <item row="0" column="0">
-               <property name="text">
-                <string>test</string>
-               </property>
-              </item>
-              <item row="0" column="1">
-               <property name="text">
-                <string>test</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item row="1" column="0">

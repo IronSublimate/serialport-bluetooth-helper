@@ -95,7 +95,7 @@ bool IODevice::openDevice()
         m_serial->setFlowControl(p.flowControl);
         device = m_serial;
         if (device->open(QIODevice::ReadWrite)) {
-            this->status_message = QIODevice::tr("Connected to %1 : %2, %3, %4, %5, %6")
+            this->status_message = tr("Connected to %1 : %2, %3, %4, %5, %6")
                                   .arg(p.name).arg(p.stringBaudRate).arg(p.stringDataBits)
                                   .arg(p.stringParity).arg(p.stringStopBits).arg(p.stringFlowControl);
             return true;
@@ -125,6 +125,8 @@ bool IODevice::openDevice()
 //        socket->open(QIODevice::ReadWrite);
         socket->connectToService(service);
         this->device = socket;
+        this->status_message=tr("Connet to Bluetooth:")+service.device().name()+
+                             "uuid:"+service.serviceUuid().toString();
     }
     return true;
 }

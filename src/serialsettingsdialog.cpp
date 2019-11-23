@@ -76,6 +76,7 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
     m_intValidator(new QIntValidator(0, 4000000, this))
 {
     m_ui->setupUi(this);
+    m_ui->localAdapterBox->setVisible(false);
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     m_ui->selectBox->setVisible(false);
 #endif
@@ -299,6 +300,8 @@ bool SerialSettingsDialog::foundDevice()
         } else {
             return true;
         }
+    } else {
+        return false;
     }
 }
 
@@ -320,7 +323,8 @@ void SerialSettingsDialog::startDiscovery(const QBluetoothUuid &uuid)
     }
     m_ui->remoteDevices->clear();
 
-    m_discoveryAgent->setUuidFilter(uuid);
+//    m_discoveryAgent->setUuidFilter(uuid);
+    Q_UNUSED(uuid);
     m_discoveryAgent->start(QBluetoothServiceDiscoveryAgent::FullDiscovery);
 
 }
@@ -395,7 +399,7 @@ void SerialSettingsDialog::newAdapterSelected()
 void SerialSettingsDialog::on_remoteDevices_itemActivated(QListWidgetItem *item)
 {
     qDebug() << "got click" << item->text();
-    m_currentSettings.m_service = m_discoveredServices.value(item);
+//    m_currentSettings.m_service = m_discoveredServices.value(item);
 //    if (m_discoveryAgent->isActive()){
 //        m_discoveryAgent->stop();
 //    }
@@ -404,9 +408,14 @@ void SerialSettingsDialog::on_remoteDevices_itemActivated(QListWidgetItem *item)
 
 void SerialSettingsDialog::on_pushButton_RefreshBluetooth_clicked()
 {
+
     const QBluetoothAddress adapterAdress = localAdapters.isEmpty() ?
                                            QBluetoothAddress() :
                                            localAdapters.at(m_currentSettings.currentAdapterIndex).address();
+    qDebug()<<localAdapters.count();
+
+//    QBluetoothLocalDevice device(adapterAdress);
+//    qDebug()<<device.isValid();
     if(m_discoveryAgent){
         delete m_discoveryAgent;
     }
