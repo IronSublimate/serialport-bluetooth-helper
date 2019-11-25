@@ -6,6 +6,10 @@
 > [代码地址](https://github.com/IronSublimate/serialport-bluetooth-helper)  
 ---
 
+## 注意 
+Qt Classic Bluetooth 只能在UWP,Android,Linux,macOS 平台使用，Windows 10 version 1507 以上系统可用  
+详见[Qt Bluetooth](https://doc.qt.io/qt-5/qtbluetooth-index.html)
+
 ## 连接方法
 1. 配置   
 ![](./help/1.png)  
