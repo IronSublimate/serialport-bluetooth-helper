@@ -33,27 +33,6 @@ static constexpr QPointF getInnerCenter(
     }
 }
 
-//static constexpr QRectF sceneRect = getRect(rudderCenter,outRadius+inRadius);
-class OutCircleItem:public QGraphicsEllipseItem{
-public:
-    explicit OutCircleItem(const QRectF& rect,const QString& svgPath=QString(),QGraphicsItem *parent = nullptr):
-        QGraphicsEllipseItem(rect,parent)
-    {
-//        if(not svgPath.isEmpty()){
-//            renderer.load(svgPath);
-//        }
-    }
-    virtual ~OutCircleItem()override=default;
-public :
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-private:
-    //QSvgRenderer renderer;
-};
-void OutCircleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-    QGraphicsEllipseItem::paint(painter,option,widget);
-}
-
 Rudder::Rudder(QWidget *parent)
     : QGraphicsView(parent)
 {

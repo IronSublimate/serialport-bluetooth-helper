@@ -442,12 +442,15 @@ void MainWindow::on_action_Uart_triggered()
 
 void MainWindow::on_actionAboutThis_triggered()
 {
-    QString about_this_str =
+    const QString about_this_str =
             QString("<p>")+
-            this->author_str+this->author+"<br/>"+
+            this->author_str+this->author+QString("<br/>")+
             //tr("Copyright: ")+APP_COPYRIGHT+QString("<br/>")+
             this->version_str+this->version+QString("<br/>")+
-            QString("QCustomPlot Version:")+QCUSTOMPLOT_VERSION_STR+
+            QString("QCustomPlot Version: ")+QCUSTOMPLOT_VERSION_STR+QString("<br/>")+
+            tr("QSS are from : ")+
+            QString("<a href=\"https://github.com/GTRONICK/QSS\">GTRONICK</a>")+QString(" ")+
+            QString("<a href=\"https://github.com/wzguo/QUI\">wzguo</a>")+
             QString("</p>")+
             this->source_code_str+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>";
     QMessageBox::about(this,this->about_this_title, about_this_str);

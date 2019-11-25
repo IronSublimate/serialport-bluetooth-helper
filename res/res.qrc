@@ -9,6 +9,8 @@
         <file>connect.png</file>
         <file>disconnect.png</file>
         <file>settings.png</file>
+        <file>skin.png</file>
+        <file>Qt_logo_2016.png</file>
     </qresource>
     <qresource prefix="/style">
         <file>style/style_2.qss</file>
@@ -19,5 +21,13 @@
         <file>style/MaterialDark.qss</file>
         <file>style/Ubuntu.qss</file>
         <file>style/style_light_blue.qss</file>
+        <file>style/black.qss</file>
+        <file>style/blue.qss</file>
+        <file>style/brown.qss</file>
+        <file>style/darkgray.qss</file>
+        <file>style/dev.qss</file>
+        <file>style/gray.qss</file>
+        <file>style/lightgray.qss</file>
+        <file>style/silvery.qss</file>
     </qresource>
 </RCC>

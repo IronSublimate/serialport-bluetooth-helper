@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>517</width>
-    <height>671</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -776,26 +776,26 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>517</width>
+     <width>800</width>
      <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>文件(&amp;F)</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>关于(&amp;A)</string>
+     <string>&amp;About</string>
     </property>
     <addaction name="actionAbout_Qt"/>
     <addaction name="actionAboutThis"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
-     <string>视图(&amp;V)</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actiondfa"/>
@@ -827,6 +827,11 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionConnect"/>
    <addaction name="action_Uart"/>
    <addaction name="separator"/>
+   <addaction name="actiondfa"/>
+   <addaction name="separator"/>
+   <addaction name="actionAboutThis"/>
+   <addaction name="actionAbout_Qt"/>
+   <addaction name="separator"/>
    <addaction name="action_exit"/>
   </widget>
   <action name="action_exit">
@@ -835,7 +840,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/img/application-exit.png</normaloff>:/img/application-exit.png</iconset>
    </property>
    <property name="text">
-    <string>退出(&amp;T)</string>
+    <string>&amp;Exit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -845,6 +850,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset resource="../res/res.qrc">
+     <normaloff>:/img/Qt_logo_2016.png</normaloff>:/img/Qt_logo_2016.png</iconset>
+   </property>
    <property name="text">
     <string>About &amp;Qt</string>
    </property>
@@ -859,8 +868,12 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actiondfa">
+   <property name="icon">
+    <iconset resource="../res/res.qrc">
+     <normaloff>:/img/skin.png</normaloff>:/img/skin.png</iconset>
+   </property>
    <property name="text">
-    <string>皮肤(&amp;S)</string>
+    <string>&amp;Skin</string>
    </property>
   </action>
   <action name="action_Uart">
@@ -876,14 +889,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+U</string>
-   </property>
-  </action>
-  <action name="action_Open_Close">
-   <property name="text">
-    <string>&amp;Open/Close</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionConnect">
