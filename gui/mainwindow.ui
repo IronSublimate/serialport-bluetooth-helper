@@ -28,7 +28,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -882,7 +882,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Config Ctrl+U</string>
+    <string>&amp;Config</string>
    </property>
    <property name="toolTip">
     <string>Config Serial Port or Bluetooth</string>

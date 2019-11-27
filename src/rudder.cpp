@@ -39,8 +39,9 @@ Rudder::Rudder(QWidget *parent)
 
     this->setStyleSheet("background:transparent;padding:0px;border:0px");
 //    this->setBackgroundBrush(Qt::transparent);
+//    setAutoFillBackground(true);
+    this->setFrameStyle(0);
     auto scene = new QGraphicsScene(this);
-
 
     scene->setSceneRect(getRect(rudderCenter,outRadius+inRadius));
     this->setScene(scene);
