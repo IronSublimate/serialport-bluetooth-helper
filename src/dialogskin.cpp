@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <QString>
+#include <QDebug>
 
 static const QString translationDir = ":/translation/translation";
 static const QString fileNames[]={

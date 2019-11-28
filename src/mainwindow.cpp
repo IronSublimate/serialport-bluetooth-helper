@@ -99,7 +99,7 @@ void MainWindow::on_clear_dict()
 
 void MainWindow::update_standard_gui(int index_receive)
 {
-    auto index = this->ui->tabWidget_other->currentIndex();
+//    auto index = this->ui->tabWidget_other->currentIndex();
     //if(index ==0 and index_receive<2 ){//读参数模式
     if(index_receive<2 ){//读参数模式
         for(const auto & key:this->iodevice.watch_paras.keys()){
@@ -212,28 +212,8 @@ void MainWindow::on_device_close()
 
 void MainWindow::on_actiondfa_triggered()
 {
-    //DialogSkin dskin;
-    auto ret = this->skinConfig->exec();
-    if(ret == QDialog::Accepted){
-
-    }
+    this->skinConfig->show();
 }
-
-
-//void MainWindow::on_action_Open_Close_triggered()
-//{
-
-//}
-
-//void MainWindow::on_action_Bluetooth_triggered()
-//{
-
-//}
-
-//void MainWindow::on_action_Uart_triggered()
-//{
-
-//}
 
 void MainWindow::on_action_exit_triggered()
 {
@@ -396,8 +376,6 @@ void MainWindow::on_pushButton_stop_clicked()
     this->iodevice.sendControlMessage(stop,0);
 }
 
-
-
 void MainWindow::on_pushButton_forward_pressed()
 {
     this->iodevice.sendControlMessage(
@@ -451,7 +429,7 @@ void MainWindow::on_actionAboutThis_triggered()
             QString("<p>")+
             tr("Author: ")+tr("Hou Yuxuan")+QString("<br/>")+
             //tr("Copyright: ")+APP_COPYRIGHT+QString("<br/>")+
-            tr("Version: ")+qApp->applicationVersion()+QString("<br/>")+
+            tr("Version: ")+APP_VERSION+QString("<br/>")+
             tr("QCustomPlot Version: ")+QCUSTOMPLOT_VERSION_STR+QString("<br/>")+
             tr("QSS are from : ")+
             QString("<a href=\"https://github.com/GTRONICK/QSS\">GTRONICK</a>")+QString(" ")+

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include (src/qcustomplot/qcustomplot.pri)
 
-VERSION = 1.3.0.0
+VERSION = 1.3.1.0
 RC_ICONS = res/icon_128.ico
 QMAKE_TARGET_COPYRIGHT = "Copyright(C) 2019 BITSCC"
 QMAKE_TARGET_DESCRIPTION = "Read data from Serialport and Bluetooth"
@@ -32,7 +32,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 # DEFINES += APP_COPYRIGHT='\\"$${QMAKE_TARGET_COPYRIGHT}\\"'
-# DEFINES += APP_VERSION='\\"$${VERSION}\\"'
+DEFINES += APP_VERSION='\\"$${VERSION}\\"'
 
 CONFIG += c++14
 
