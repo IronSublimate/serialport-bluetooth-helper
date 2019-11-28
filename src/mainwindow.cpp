@@ -25,9 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_status(new QLabel)
 {
 
-
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -266,9 +264,10 @@ void MainWindow::on_actionConnect_triggered(bool checked)
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     auto size = event->size();
     qDebug()<<size;
-#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
+
     if(size.height()>size.width()){
         change_gui_vertical_screen();
     } else {
@@ -425,18 +424,8 @@ void MainWindow::on_action_Uart_triggered()
 
 void MainWindow::on_actionAboutThis_triggered()
 {
-    const QString about_this_str =
-            QString("<p>")+
-            tr("Author: ")+tr("Hou Yuxuan")+QString("<br/>")+
-            //tr("Copyright: ")+APP_COPYRIGHT+QString("<br/>")+
-            tr("Version: ")+APP_VERSION+QString("<br/>")+
-            tr("QCustomPlot Version: ")+QCUSTOMPLOT_VERSION_STR+QString("<br/>")+
-            tr("QSS are from : ")+
-            QString("<a href=\"https://github.com/GTRONICK/QSS\">GTRONICK</a>")+QString(" ")+
-            QString("<a href=\"https://github.com/wzguo/QUI\">wzguo</a>")+
-            QString("</p>")+
-            tr("Source Code: ")+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>";
-    QMessageBox::about(this,qApp->applicationDisplayName(), about_this_str);
+    QString aboutThisInformation();
+    QMessageBox::about(this,qApp->applicationDisplayName(), aboutThisInformation());
 }
 
 void MainWindow::on_actionAbout_Qt_triggered()

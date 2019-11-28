@@ -48,13 +48,8 @@ private:
     Ui::MainWindow *ui;
 
     DialogSkin* skinConfig = nullptr;
-//    const QString version=APP_VERSION;
-//    const QString about_this_title=tr("SerialPort-Bluetooth-helper");
-//    const QString author=tr("Hou Yuxuan");
-//    const QString version_str=tr("Version: ");
-//    const QString author_str=tr("Author: ");
-//    const QString source_code_str=tr("Source Code: ");
-    const QString source_code_address="https://github.com/IronSublimate/serialport-bluetooth-helper";
+
+
     //QIODevice* device = nullptr;
     IODevice iodevice;
     //SerialSettingsDialog* uartConfig = nullptr;

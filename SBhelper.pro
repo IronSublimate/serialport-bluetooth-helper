@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include (src/qcustomplot/qcustomplot.pri)
 
-VERSION = 1.3.1.0
+VERSION = 1.3.2.0
 RC_ICONS = res/icon_128.ico
 QMAKE_TARGET_COPYRIGHT = "Copyright(C) 2019 BITSCC"
 QMAKE_TARGET_DESCRIPTION = "Read data from Serialport and Bluetooth"
@@ -37,6 +37,7 @@ DEFINES += APP_VERSION='\\"$${VERSION}\\"'
 CONFIG += c++14
 
 SOURCES += \
+        src/aboutThis.cpp \
         src/dialogskin.cpp \
         src/iodevice.cpp \
         src/main.cpp \
@@ -95,7 +96,12 @@ DISTFILES += \
     android/res/values/libs.xml \
     res/translation/SBHelper_en.ts \
     res/translation/SBHelper_zh_CN.ts
-
+android {
+    DEFINES += SMALL_SCREEN
+}
+ios {
+    DEFINES += SMALL_SCREEN
+}
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android

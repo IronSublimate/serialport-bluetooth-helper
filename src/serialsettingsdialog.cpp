@@ -171,24 +171,28 @@ void SerialSettingsDialog::fillPortsParameters()
     m_ui->baudRateBox->setCurrentIndex(3);
     m_ui->baudRateBox->addItem(tr("Custom"));
 
+    m_ui->dataBitsBox->clear();
     m_ui->dataBitsBox->addItem(QStringLiteral("5"), QSerialPort::Data5);
     m_ui->dataBitsBox->addItem(QStringLiteral("6"), QSerialPort::Data6);
     m_ui->dataBitsBox->addItem(QStringLiteral("7"), QSerialPort::Data7);
     m_ui->dataBitsBox->addItem(QStringLiteral("8"), QSerialPort::Data8);
     m_ui->dataBitsBox->setCurrentIndex(3);
 
+    m_ui->parityBox->clear();
     m_ui->parityBox->addItem(tr("None"), QSerialPort::NoParity);
     m_ui->parityBox->addItem(tr("Even"), QSerialPort::EvenParity);
     m_ui->parityBox->addItem(tr("Odd"), QSerialPort::OddParity);
     m_ui->parityBox->addItem(tr("Mark"), QSerialPort::MarkParity);
     m_ui->parityBox->addItem(tr("Space"), QSerialPort::SpaceParity);
 
+    m_ui->stopBitsBox->clear();
     m_ui->stopBitsBox->addItem(QStringLiteral("1"), QSerialPort::OneStop);
 #ifdef Q_OS_WIN
     m_ui->stopBitsBox->addItem(tr("1.5"), QSerialPort::OneAndHalfStop);
 #endif
     m_ui->stopBitsBox->addItem(QStringLiteral("2"), QSerialPort::TwoStop);
 
+    m_ui->flowControlBox->clear();
     m_ui->flowControlBox->addItem(tr("None"), QSerialPort::NoFlowControl);
     m_ui->flowControlBox->addItem(tr("RTS/CTS"), QSerialPort::HardwareControl);
     m_ui->flowControlBox->addItem(tr("XON/XOFF"), QSerialPort::SoftwareControl);
