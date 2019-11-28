@@ -22,6 +22,8 @@ public:
     bool operator ==(const QString& other);
 signals:
     void send_para_to_MCU(const QString &name, const QString &tx_data_index, const QString &tx_data_value);
+protected:
+    void changeEvent(QEvent* event);
 private slots:
     void on_send_to_MCU_clicked();
 

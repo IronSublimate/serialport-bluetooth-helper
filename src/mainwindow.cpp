@@ -24,21 +24,32 @@ MainWindow::MainWindow(QWidget *parent) :
     iodevice(this),
     m_status(new QLabel)
 {
+
+
+}
+
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::init()
+{
     ui->setupUi(this);
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 
 #else
     change_gui_horizontal_screen();
 #endif
-    //this->timer = new QTimer(this);
-    this->uartConfig = new SerialSettingsDialog(this);
-    this->skinConfig = new DialogSkin(this);
-
     ui->statusbar->addWidget(m_status);
-
-    create_signal_slots();
     this->set_control_enable(false);
 
+    this->skinConfig = new DialogSkin(this);
+    //this->timer = new QTimer(this);
+    this->uartConfig = new SerialSettingsDialog(this);
+
+    create_signal_slots();
 }
 
 void MainWindow::create_signal_slots()
@@ -164,12 +175,6 @@ void MainWindow::on_control_key_release()
     this->iodevice.sendControlMessage(stop,0);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-
 //void MainWindow::on_about_this(){
 //    QMessageBox::about(this,this->about_this_title,this->about_this_text);
 //}
@@ -210,19 +215,7 @@ void MainWindow::on_actiondfa_triggered()
     //DialogSkin dskin;
     auto ret = this->skinConfig->exec();
     if(ret == QDialog::Accepted){
-        auto skin = skinConfig->getSkinName();
-        if(skin == tr("default")){
-            qApp->setStyleSheet("");
-            return;
-        }
-        QFile qss(":/style/style/"+skin+".qss");
-        if(qss.open(QFile::ReadOnly)){
-            //a.setStyleSheet(QLatin1String(qss.readAll()));
-            qApp->setStyleSheet(qss.readAll());
-            qss.close();
-        } else {
-            QMessageBox::warning(nullptr, "warning", "Open failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        }
+
     }
 }
 
@@ -303,6 +296,18 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     }
 
 #endif
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    switch (event->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+    QMainWindow::changeEvent(event);
 }
 
 void MainWindow::showStatusMessage(const QString &message)
@@ -444,16 +449,16 @@ void MainWindow::on_actionAboutThis_triggered()
 {
     const QString about_this_str =
             QString("<p>")+
-            this->author_str+this->author+QString("<br/>")+
+            tr("Author: ")+tr("Hou Yuxuan")+QString("<br/>")+
             //tr("Copyright: ")+APP_COPYRIGHT+QString("<br/>")+
-            this->version_str+this->version+QString("<br/>")+
-            QString("QCustomPlot Version: ")+QCUSTOMPLOT_VERSION_STR+QString("<br/>")+
+            tr("Version: ")+qApp->applicationVersion()+QString("<br/>")+
+            tr("QCustomPlot Version: ")+QCUSTOMPLOT_VERSION_STR+QString("<br/>")+
             tr("QSS are from : ")+
             QString("<a href=\"https://github.com/GTRONICK/QSS\">GTRONICK</a>")+QString(" ")+
             QString("<a href=\"https://github.com/wzguo/QUI\">wzguo</a>")+
             QString("</p>")+
-            this->source_code_str+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>";
-    QMessageBox::about(this,this->about_this_title, about_this_str);
+            tr("Source Code: ")+"<a href=\""+this->source_code_address+"\">"+this->source_code_address+"</a>";
+    QMessageBox::about(this,qApp->applicationDisplayName(), about_this_str);
 }
 
 void MainWindow::on_actionAbout_Qt_triggered()

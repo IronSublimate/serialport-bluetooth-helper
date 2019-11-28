@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Serial-Bluetooth-helper</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#WidgetLoading{background-image: url(:/img/loading.jpg)};</string>
@@ -81,12 +81,12 @@
       <widget class="QLabel" name="Author">
        <property name="styleSheet">
         <string notr="true">QLabel#Author{
-	font: 20pt &quot;宋体&quot;;	
+	font: 10pt &quot;宋体&quot;;	
 	color: rgb(0, 0, 127);
 }</string>
        </property>
        <property name="text">
-        <string>北京理工大学  侯宇轩</string>
+        <string>Hou Yuxuan,Beijing Insititute of Technology</string>
        </property>
       </widget>
      </item>
@@ -147,7 +147,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>加载中...</string>
+      <string>Loading...</string>
      </property>
     </widget>
    </item>

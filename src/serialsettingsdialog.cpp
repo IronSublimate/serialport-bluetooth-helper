@@ -163,6 +163,7 @@ void SerialSettingsDialog::checkCustomDevicePathPolicy(int idx)
 
 void SerialSettingsDialog::fillPortsParameters()
 {
+    m_ui->baudRateBox->clear();
     m_ui->baudRateBox->addItem(QStringLiteral("9600"), QSerialPort::Baud9600);
     m_ui->baudRateBox->addItem(QStringLiteral("19200"), QSerialPort::Baud19200);
     m_ui->baudRateBox->addItem(QStringLiteral("38400"), QSerialPort::Baud38400);
@@ -216,7 +217,7 @@ void SerialSettingsDialog::fillPortsInfo()
         m_ui->serialPortInfoListBox->addItem(list.first(), list);
     }
 
-    m_ui->serialPortInfoListBox->addItem(tr("Custom"));
+    m_ui->serialPortInfoListBox->addItem("Custom");
 }
 
 void SerialSettingsDialog::updateSettings()
@@ -286,6 +287,13 @@ int SerialSettingsDialog::adapterFromUserSelection() const
     return result;
 }
 
+void SerialSettingsDialog::updateTranslation()
+{
+    m_ui->serialPortInfoListBox->setItemText(m_ui->serialPortInfoListBox->count() -1,tr("custom"));
+    this->showPortInfo(m_ui->serialPortInfoListBox->currentIndex());
+    fillPortsParameters();
+}
+
 bool SerialSettingsDialog::foundDevice()
 {
     if(this->m_ui->tabWidget->currentIndex()==Type::SerialPort){
@@ -339,6 +347,19 @@ void SerialSettingsDialog::stopDiscovery()
 QBluetoothServiceInfo SerialSettingsDialog::service() const
 {
     return m_currentSettings.m_service;
+}
+
+void SerialSettingsDialog::changeEvent(QEvent *event)
+{
+    switch (event->type()) {
+    case QEvent::LanguageChange:
+        m_ui->retranslateUi(this);
+        updateTranslation();
+        break;
+    default:
+        break;
+    }
+    QDialog::changeEvent(event);
 }
 
 void SerialSettingsDialog::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)

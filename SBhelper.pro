@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include (src/qcustomplot/qcustomplot.pri)
 
-VERSION = 1.2.1.0
+VERSION = 1.3.0.0
 RC_ICONS = res/icon_128.ico
 QMAKE_TARGET_COPYRIGHT = "Copyright(C) 2019 BITSCC"
 QMAKE_TARGET_DESCRIPTION = "Read data from Serialport and Bluetooth"
@@ -32,7 +32,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 # DEFINES += APP_COPYRIGHT='\\"$${QMAKE_TARGET_COPYRIGHT}\\"'
-DEFINES += APP_VERSION='\\"$${VERSION}\\"'
+# DEFINES += APP_VERSION='\\"$${VERSION}\\"'
 
 CONFIG += c++14
 
@@ -71,13 +71,18 @@ FORMS += \
         gui/widgetparaitem.ui \
         gui/widgetloading.ui
 
+TRANSLATIONS += \
+        res/translation/SBHelper_zh_CN.ts\
+        res/translation/SBHelper_en.ts
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    res/res.qrc
+    res/res.qrc \
+
 
 DISTFILES += \
     README.md \
@@ -87,7 +92,9 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    res/translation/SBHelper_en.ts \
+    res/translation/SBHelper_zh_CN.ts
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \

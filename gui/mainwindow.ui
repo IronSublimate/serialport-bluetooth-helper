@@ -28,7 +28,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -251,7 +251,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_img">
        <attribute name="title">
-        <string>Image</string>
+        <string>查看图像</string>
        </attribute>
        <attribute name="whatsThis">
         <string>信号发生器</string>
@@ -294,6 +294,12 @@ p, li { white-space: pre-wrap; }
           <property name="text">
            <string>60</string>
           </property>
+          <property name="placeholderText">
+           <string/>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="1" column="2">
@@ -322,6 +328,12 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="text">
            <string>80</string>
+          </property>
+          <property name="placeholderText">
+           <string/>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -873,7 +885,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/img/skin.png</normaloff>:/img/skin.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Skin</string>
+    <string>&amp;Preference</string>
+   </property>
+   <property name="toolTip">
+    <string>Preference</string>
    </property>
   </action>
   <action name="action_Uart">
@@ -882,10 +897,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Config</string>
+    <string>&amp;Configuration</string>
    </property>
    <property name="toolTip">
-    <string>Config Serial Port or Bluetooth</string>
+    <string>Configurate Serial Port or Bluetooth Connection</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+U</string>

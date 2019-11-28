@@ -111,7 +111,8 @@ public:
     void startDiscovery(const QBluetoothUuid &uuid);
     void stopDiscovery();
     QBluetoothServiceInfo service() const;
-
+protected:
+    void changeEvent(QEvent* event);
 private slots:
     void showPortInfo(int idx);
     void apply();
@@ -135,6 +136,7 @@ private:
 
     void findBluetoothLoacalAdapter();
     int adapterFromUserSelection() const;
+    void updateTranslation();
 
 private:
     Ui::SettingsDialog *m_ui = nullptr;

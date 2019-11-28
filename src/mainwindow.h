@@ -35,41 +35,25 @@ public:
         clock = 7,
         anticlock = 9
     };
-private slots:
-    void com_receive_data();
-    //void on_about_this();
 
-    void on_Send_Button_clicked();
-
-    //void on_tabWidget_currentChanged(int index);
-
-    void on_action_exit_triggered();
-
-    void on_actiondfa_triggered();
-
-    //void on_action_Open_Close_triggered();
-
-    //void on_action_Bluetooth_triggered();
-
-    //void on_action_Uart_triggered();
-
-    void on_actionConnect_triggered(bool checked);
+public:
+    void init();
 
 public:
     SerialSettingsDialog* uartConfig = nullptr;
 protected:
     void resizeEvent(QResizeEvent* event) override;
-
+    void changeEvent(QEvent* event) override;
 private:
     Ui::MainWindow *ui;
 
     DialogSkin* skinConfig = nullptr;
-    const QString version=APP_VERSION;
-    const QString about_this_title=tr("SerialPort-Bluetooth-helper");
-    const QString author=tr("Hou Yuxuan");
-    const QString version_str=tr("Version: ");
-    const QString author_str=tr("Author: ");
-    const QString source_code_str=tr("Source Code: ");
+//    const QString version=APP_VERSION;
+//    const QString about_this_title=tr("SerialPort-Bluetooth-helper");
+//    const QString author=tr("Hou Yuxuan");
+//    const QString version_str=tr("Version: ");
+//    const QString author_str=tr("Author: ");
+//    const QString source_code_str=tr("Source Code: ");
     const QString source_code_address="https://github.com/IronSublimate/serialport-bluetooth-helper";
     //QIODevice* device = nullptr;
     IODevice iodevice;
@@ -99,6 +83,13 @@ private slots:
     void on_clear_dict();
     void update_standard_gui(int index_receive);
     void on_control_key_release();
+
+    void com_receive_data();
+    void on_Send_Button_clicked();
+    //void on_tabWidget_currentChanged(int index);
+    void on_action_exit_triggered();
+    void on_actiondfa_triggered();
+    void on_actionConnect_triggered(bool checked);
 
     void on_tabWidget_other_currentChanged(int index);
     void on_pushButton_StartStop_clicked();

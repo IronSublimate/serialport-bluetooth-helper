@@ -30,4 +30,8 @@
         <file>style/lightgray.qss</file>
         <file>style/silvery.qss</file>
     </qresource>
+    <qresource prefix="/translation">
+        <file>translation/SBHelper_en.qm</file>
+        <file>translation/SBHelper_zh_CN.qm</file>
+    </qresource>
 </RCC>

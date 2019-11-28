@@ -37,6 +37,18 @@ bool WidgetParaItem::operator ==(const QString &other)
     return this->getName()==other;
 }
 
+void WidgetParaItem::changeEvent(QEvent *event)
+{
+    switch (event->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+    QWidget::changeEvent(event);
+}
+
 void WidgetParaItem::on_send_to_MCU_clicked()
 {
     //const QString &name, const QString &tx_data_index, const QString &tx_data_value

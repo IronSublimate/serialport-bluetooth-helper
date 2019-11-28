@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>皮肤</string>
+   <string>Preference</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/res.qrc">
@@ -19,16 +19,41 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>皮肤</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Skin</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QComboBox" name="comboBox"/>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="comboBox"/>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_Lang">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QComboBox" name="comboBox_Lang">
+        <item>
+         <property name="text">
+          <string>Chinese simplified</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>English</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
