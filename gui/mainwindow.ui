@@ -963,5 +963,38 @@ p, li { white-space: pre-wrap; }
  <resources>
   <include location="../res/res.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ClearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textEdit_Recive</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>701</x>
+     <y>139</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_clearSendText</sender>
+   <signal>clicked()</signal>
+   <receiver>textEdit_Send</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>350</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>432</x>
+     <y>531</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
