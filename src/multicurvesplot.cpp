@@ -4,9 +4,17 @@
 #include <QTime>
 #include <QtGlobal>
 #include <ciso646>
+#include <QVector3D>
 
 static inline QColor generateColor(){
-    return QColor(qrand()%256,qrand()%256,qrand()%256);
+    static QVector3D last_vec={255,255,255};
+    while(1){
+        QVector3D vec(qrand()%256,qrand()%256,qrand()%256);
+        if((vec-last_vec).length()>20 and (vec-QVector3D(255,255,255)).length()>20){
+            last_vec = vec;
+            return QColor(vec[0],vec[1],vec[2]);
+        }
+    }
 }
 static inline QColor generateColor4(){
     return QColor(qrand()%256,qrand()%256,qrand()%256,qrand()%256);
@@ -38,13 +46,15 @@ void MultiCurvesPlot::addData(const QString &name, qreal value)
     if(multiCurvesPlotPrivate->timerId>=0){
         if(multiCurvesPlotPrivate->data.contains(name)){
             multiCurvesPlotPrivate->data[name]->addData(
-                        QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime,
+                        (QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime)/1000.0,
                         value);
         } else {
             auto graph = this->addGraph();
-            graph->setPen(generateColor());
+            QPen pen(generateColor());
+            pen.setWidth(2);
+            graph->setPen(pen);
             graph->addData(
-                        QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime,
+                        (QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime)/1000.0,
                         value);
             graph->setName(name);
 
@@ -69,6 +79,7 @@ void MultiCurvesPlot::start()
     if(multiCurvesPlotPrivate->timerId<0){
         multiCurvesPlotPrivate->startTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
         multiCurvesPlotPrivate->timerId = startTimer(multiCurvesPlotPrivate->interval);
+        this->legend->setVisible(true);
     }
 }
 
@@ -76,6 +87,7 @@ void MultiCurvesPlot::stop()
 {
     killTimer(multiCurvesPlotPrivate->timerId);
     multiCurvesPlotPrivate->timerId = -1;
+    this->legend->setVisible(false);
 }
 
 

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include (src/qcustomplot/qcustomplot.pri)
 
-VERSION = 1.3.3.0
+VERSION = 1.4.0.0
 RC_ICONS = res/icon_128.ico
 QMAKE_TARGET_COPYRIGHT = "Copyright(C) 2019 BITSCC"
 QMAKE_TARGET_DESCRIPTION = "Read data from Serialport and Bluetooth"
