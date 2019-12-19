@@ -10,7 +10,9 @@
 Qt Classic Bluetooth 只能在UWP,Android,Linux,macOS 平台使用，Windows 10 version 1507 以上系统可用  
 详见[Qt Bluetooth](https://doc.qt.io/qt-5/qtbluetooth-index.html)
 
-## 连接方法
+## 使用说明
+
+### 连接方法
 1. 配置   
 ![](./help/1.png)  
 2. 选择蓝牙或串口并配置   
@@ -18,7 +20,13 @@ Qt Classic Bluetooth 只能在UWP,Android,Linux,macOS 平台使用，Windows 10 
 3. 连接  
 ![](./help/3.png)
 
-## 使用说明
+### 波形模式使用
+![](./help/wave.png)
+点击下面的开始按钮波形开始显示，停止按钮波形停止  
+左键拖动移动，右键画矩形框选择区域放大，滚轮缩放
+
+
+### 其他
 1. 接收发送数据为普通的串口功能
 2. 查看图像可以查看单片机发送的未解压图像(二值化图像，1像素占1位)，
 或解压后图像(灰度图像，1像素占8位)，使用键盘P键暂停，
