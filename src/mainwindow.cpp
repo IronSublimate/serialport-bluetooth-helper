@@ -357,6 +357,7 @@ void MainWindow::on_pushButton_StartStop_clicked()
 void MainWindow::on_pushButton_Clear_clicked()
 {
     this->ui->widget_CurvesPlot->clear();
+    this->iodevice.wave_paras.clear();
 }
 
 void MainWindow::on_checkBox_manual_stateChanged(int arg1)
