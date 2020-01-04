@@ -58,6 +58,7 @@
 #include <QIntValidator>
 #include <QLineEdit>
 #include <QSerialPortInfo>
+#include <QSettings>
 #include <ciso646>
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras>
@@ -102,6 +103,7 @@ SerialSettingsDialog::SerialSettingsDialog(QWidget *parent) :
     fillPortsParameters();
     fillPortsInfo();
 
+    readSettings();
     updateSettings();
 }
 
@@ -136,6 +138,7 @@ void SerialSettingsDialog::apply()
         m_currentSettings.finishedSetting = this->foundDevice();
     }
     updateSettings();
+    writeSettings();
     hide();
     if (m_discoveryAgent and m_discoveryAgent->isActive()){
         m_discoveryAgent->stop();
@@ -163,39 +166,52 @@ void SerialSettingsDialog::checkCustomDevicePathPolicy(int idx)
 
 void SerialSettingsDialog::fillPortsParameters()
 {
+    auto current_index = m_ui->baudRateBox->currentIndex();
     m_ui->baudRateBox->clear();
+    m_ui->baudRateBox->addItem(QStringLiteral("1200"), QSerialPort::Baud1200);
+    m_ui->baudRateBox->addItem(QStringLiteral("9600"), QSerialPort::Baud9600);
+    m_ui->baudRateBox->addItem(QStringLiteral("2400"), QSerialPort::Baud2400);
+    m_ui->baudRateBox->addItem(QStringLiteral("4800"), QSerialPort::Baud4800);
     m_ui->baudRateBox->addItem(QStringLiteral("9600"), QSerialPort::Baud9600);
     m_ui->baudRateBox->addItem(QStringLiteral("19200"), QSerialPort::Baud19200);
     m_ui->baudRateBox->addItem(QStringLiteral("38400"), QSerialPort::Baud38400);
+    m_ui->baudRateBox->addItem(QStringLiteral("57600"), QSerialPort::Baud57600);
     m_ui->baudRateBox->addItem(QStringLiteral("115200"), QSerialPort::Baud115200);
-    m_ui->baudRateBox->setCurrentIndex(3);
+    m_ui->baudRateBox->setCurrentIndex(current_index);
     m_ui->baudRateBox->addItem(tr("Custom"));
 
+    current_index = m_ui->dataBitsBox->currentIndex();
     m_ui->dataBitsBox->clear();
     m_ui->dataBitsBox->addItem(QStringLiteral("5"), QSerialPort::Data5);
     m_ui->dataBitsBox->addItem(QStringLiteral("6"), QSerialPort::Data6);
     m_ui->dataBitsBox->addItem(QStringLiteral("7"), QSerialPort::Data7);
     m_ui->dataBitsBox->addItem(QStringLiteral("8"), QSerialPort::Data8);
-    m_ui->dataBitsBox->setCurrentIndex(3);
+    m_ui->dataBitsBox->setCurrentIndex(current_index);
 
+    current_index = m_ui->parityBox->currentIndex();
     m_ui->parityBox->clear();
     m_ui->parityBox->addItem(tr("None"), QSerialPort::NoParity);
     m_ui->parityBox->addItem(tr("Even"), QSerialPort::EvenParity);
     m_ui->parityBox->addItem(tr("Odd"), QSerialPort::OddParity);
     m_ui->parityBox->addItem(tr("Mark"), QSerialPort::MarkParity);
     m_ui->parityBox->addItem(tr("Space"), QSerialPort::SpaceParity);
+    m_ui->parityBox->setCurrentIndex(current_index);
 
+    current_index = m_ui->stopBitsBox->currentIndex();
     m_ui->stopBitsBox->clear();
     m_ui->stopBitsBox->addItem(QStringLiteral("1"), QSerialPort::OneStop);
 #ifdef Q_OS_WIN
     m_ui->stopBitsBox->addItem(tr("1.5"), QSerialPort::OneAndHalfStop);
 #endif
     m_ui->stopBitsBox->addItem(QStringLiteral("2"), QSerialPort::TwoStop);
+    m_ui->stopBitsBox->setCurrentIndex(current_index);
 
+    current_index = m_ui->flowControlBox->currentIndex();
     m_ui->flowControlBox->clear();
     m_ui->flowControlBox->addItem(tr("None"), QSerialPort::NoFlowControl);
     m_ui->flowControlBox->addItem(tr("RTS/CTS"), QSerialPort::HardwareControl);
     m_ui->flowControlBox->addItem(tr("XON/XOFF"), QSerialPort::SoftwareControl);
+    m_ui->flowControlBox->setCurrentIndex(current_index);
 }
 
 void SerialSettingsDialog::fillPortsInfo()
@@ -229,7 +245,7 @@ void SerialSettingsDialog::updateSettings()
     m_currentSettings.portType = Type(m_ui->tabWidget->currentIndex());
 
     m_currentSettings.name = m_ui->serialPortInfoListBox->currentText();
-    if (m_ui->baudRateBox->currentIndex() == 4) {
+    if (m_ui->baudRateBox->currentIndex() == 9) {
         m_currentSettings.baudRate = m_ui->baudRateBox->currentText().toInt();
     } else {
         m_currentSettings.baudRate = static_cast<QSerialPort::BaudRate>(
@@ -296,6 +312,36 @@ void SerialSettingsDialog::updateTranslation()
     m_ui->serialPortInfoListBox->setItemText(m_ui->serialPortInfoListBox->count() -1,tr("custom"));
     this->showPortInfo(m_ui->serialPortInfoListBox->currentIndex());
     fillPortsParameters();
+}
+
+void SerialSettingsDialog::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    QString portName = settings.value(m_ui->serialPortInfoListBox->objectName()).toString();
+    auto index = m_ui->serialPortInfoListBox->findText(portName);
+    m_ui->serialPortInfoListBox->setCurrentIndex(index);
+    m_ui->baudRateBox->setCurrentIndex(settings.value(m_ui->baudRateBox->objectName(),0).toInt());
+    m_ui->dataBitsBox->setCurrentIndex(settings.value(m_ui->dataBitsBox->objectName(),0).toInt());
+    m_ui->flowControlBox->setCurrentIndex(settings.value(m_ui->flowControlBox->objectName(),0).toInt());
+    m_ui->parityBox->setCurrentIndex(settings.value(m_ui->parityBox->objectName(),0).toInt());
+    m_ui->stopBitsBox->setCurrentIndex(settings.value(m_ui->stopBitsBox->objectName(),0).toInt());
+    m_ui->tabWidget->setCurrentIndex(settings.value(m_ui->tabWidget->objectName(),0).toInt());
+    settings.endGroup();
+}
+
+void SerialSettingsDialog::writeSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    settings.setValue(m_ui->serialPortInfoListBox->objectName(),m_ui->serialPortInfoListBox->currentText());
+    settings.setValue(m_ui->baudRateBox->objectName(),m_ui->baudRateBox->currentIndex());
+    settings.setValue(m_ui->dataBitsBox->objectName(),m_ui->dataBitsBox->currentIndex());
+    settings.setValue(m_ui->flowControlBox->objectName(),m_ui->flowControlBox->currentIndex());
+    settings.setValue(m_ui->parityBox->objectName(),m_ui->parityBox->currentIndex());
+    settings.setValue(m_ui->stopBitsBox->objectName(),m_ui->stopBitsBox->currentIndex());
+    settings.setValue(m_ui->tabWidget->objectName(),m_ui->tabWidget->currentIndex());
+    settings.endGroup();
 }
 
 bool SerialSettingsDialog::foundDevice()

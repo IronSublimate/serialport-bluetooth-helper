@@ -35,8 +35,14 @@ protected:
     void accept();
     void changeEvent(QEvent* event);
 private:
+    void fillSkinParameters();
     void updateSettings();
     void updateTranslation();
+
+    void readSettings();
+    void writeSettings();
+
+    void updateSkin();
 };
 
 #endif // DIALOGSKIN_H

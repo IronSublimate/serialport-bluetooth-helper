@@ -47,9 +47,9 @@ void WidgetPainter::mouseMoveEvent(QMouseEvent *event)
 {
     int x = event->x()*this->imgWidth/this->width();
     int y = event->y()*this->imgHeight/this->height();
-    static QString f_string = tr("鼠标位置");
-    auto s = f_string.sprintf(" x:%4d,y:%4d",x,y);
-    emit this->set_position_text(f_string+s);
+    QString f_string = tr("mouse position x:%1,y:%2").arg(x,3).arg(y,3);
+
+    emit this->set_position_text(f_string);
 }
 
 void WidgetPainter::keyPressEvent(QKeyEvent *event)
@@ -66,14 +66,16 @@ void WidgetPainter::calculate_grid_points()
     qreal pix_width = static_cast<qreal>(this->width())/this->imgWidth;
     qreal pix_height = static_cast<qreal>(this->height())/this->imgHeight;
     this->grid_points.clear();
-    while(x<=this->width()){
+    while(x<this->width()){
         this->grid_points.append(QLineF(x,0,x,this->height()));
         x+=pix_width;
     }
-    while(y<=this->height()){
+    this->grid_points.append(QLineF(this->width(),this->width(),x,this->height()));
+    while(y<this->height()){
         this->grid_points.append(QLineF(0,y,this->width(),y));
         y+=pix_height;
     }
+    this->grid_points.append(QLineF(0,this->height(),this->width(),this->height()));
 }
 
 void WidgetPainter::saveImg()

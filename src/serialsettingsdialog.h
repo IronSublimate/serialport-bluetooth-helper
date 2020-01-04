@@ -137,7 +137,8 @@ private:
     void findBluetoothLoacalAdapter();
     int adapterFromUserSelection() const;
     void updateTranslation();
-
+    void readSettings();
+    void writeSettings();
 private:
     Ui::SettingsDialog *m_ui = nullptr;
     Settings m_currentSettings;

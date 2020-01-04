@@ -1,22 +1,32 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QtWidgets/QMessageBox>
 #include <QTime>
 #include <QTimer>
-#include <ciso646>
-#include <QFile>
+#include <QSettings>
 #include <QTextStream>
 #include <QFileDialog>
-#include "dialogskin.h"
-#include <QApplication>
-#include "serialsettingsdialog.h"
+#include <QTextStream>
+#include <QFileDialog>
+#include <QtAlgorithms>
+#include <QFile>
 #include <QDebug>
 #include <QTableWidgetItem>
 #include <QVector>
+
+#include <ciso646>
+
 #include "widgetparaitem.h"
-#include <QtAlgorithms>
+#include "dialogskin.h"
+#include "serialsettingsdialog.h"
+
+//constants
+const QString QSTR_GEOMETRY("Geometry");
+const QString QSTR_STATE("State");
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,17 +53,21 @@ void MainWindow::init()
     ui->statusbar->addWidget(m_status);
     this->set_control_enable(false);
 
+
     this->skinConfig = new DialogSkin(this);
     //this->timer = new QTimer(this);
     this->uartConfig = new SerialSettingsDialog(this);
 
     create_signal_slots();
+
+    readSettings();
 }
 
 void MainWindow::create_signal_slots()
 {
     connect(this->ui->checkBox_showGrid,&QCheckBox::stateChanged,this->ui->label_img,&WidgetPainter::set_enable_grid);
     connect(this->ui->pushButton_saveImg,&QPushButton::clicked,this->ui->label_img,&WidgetPainter::saveImg);
+    connect(this->ui->label_img,&WidgetPainter::set_position_text,this->ui->label_position,&QLabel::setText);
     connect(this->ui->pushButton_clear_dict,&QPushButton::clicked,this,&MainWindow::on_clear_dict);
     connect(this->ui->rudder,&Rudder::rudderMoved,[this](qreal x,qreal y){
         this->iodevice.sendVectorControlMessage(x,y,this->ui->horizontalSlider_speed->value()*100);
@@ -85,6 +99,62 @@ void MainWindow::set_control_enable(bool enable)
 void MainWindow::set_GUI_enable(bool enable)
 {
     ui->action_Uart->setEnabled(enable);
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    restoreGeometry(settings.value(QSTR_GEOMETRY).toByteArray());
+    restoreState(settings.value(QSTR_STATE).toByteArray());
+    ui->tabWidget->setCurrentIndex(settings.value(ui->tabWidget->objectName(),0).toInt());
+    ui->tabWidget_other->setCurrentIndex(settings.value(ui->tabWidget_other->objectName(),0).toInt());
+    settings.endGroup();
+
+    //接收发送模式
+    settings.beginGroup(ui->tab_msg->objectName());
+    ui->hexSending_checkBox->setChecked(settings.value(ui->hexSending_checkBox->objectName(),false).toBool());
+    ui->hexShowing_checkBox->setChecked(settings.value(ui->hexShowing_checkBox->objectName(),false).toBool());
+    ui->comboBox_codetype->setCurrentIndex(settings.value(ui->comboBox_codetype->objectName(),0).toInt());
+    settings.endGroup();
+
+    //图像模式
+    settings.beginGroup(ui->tab_img->objectName());
+    ui->comboBox_imgType->setCurrentIndex(settings.value(ui->comboBox_imgType->objectName(),0).toInt());
+    ui->lineEdit_height->setText(settings.value(ui->lineEdit_height->objectName(),"60").toString());
+    ui->lineEdit_width->setText(settings.value(ui->lineEdit_width->objectName(),"80").toString());
+    ui->checkBox_showGrid->setChecked(settings.value(ui->checkBox_showGrid->objectName(),false).toBool());
+    settings.endGroup();
+
+    //其他模式
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    settings.setValue(QSTR_GEOMETRY, saveGeometry());
+    settings.setValue(QSTR_STATE, saveState());
+    settings.setValue(ui->tabWidget->objectName(),ui->tabWidget->currentIndex());
+    settings.setValue(ui->tabWidget_other->objectName(),ui->tabWidget_other->currentIndex());
+    settings.endGroup();
+
+    //接收发送模式
+    settings.beginGroup(ui->tab_msg->objectName());
+    settings.setValue(ui->hexSending_checkBox->objectName(),ui->hexSending_checkBox->isChecked());
+    settings.setValue(ui->hexShowing_checkBox->objectName(),ui->hexShowing_checkBox->isChecked());
+    settings.setValue(ui->comboBox_codetype->objectName(),ui->comboBox_codetype->currentIndex());
+    settings.endGroup();
+
+    //图像模式
+    settings.beginGroup(ui->tab_img->objectName());
+    settings.setValue(ui->comboBox_imgType->objectName(),ui->comboBox_imgType->currentIndex());
+    settings.setValue(ui->lineEdit_height->objectName(),ui->lineEdit_height->text());
+    settings.setValue(ui->lineEdit_width->objectName(),ui->lineEdit_width->text());
+    settings.setValue(ui->checkBox_showGrid->objectName(),ui->checkBox_showGrid->isChecked());
+    settings.endGroup();
+
+    //其他模式
 }
 
 void MainWindow::on_clear_dict()
@@ -287,6 +357,12 @@ void MainWindow::changeEvent(QEvent *event)
         break;
     }
     QMainWindow::changeEvent(event);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
 }
 
 void MainWindow::showStatusMessage(const QString &message)

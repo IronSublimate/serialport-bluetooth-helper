@@ -7,6 +7,7 @@
 #include <QTranslator>
 #include <QString>
 #include <QDebug>
+#include <QSettings>
 
 static const QString translationDir = ":/translation/translation";
 static const QString fileNames[]={
@@ -21,16 +22,12 @@ DialogSkin::DialogSkin(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QDir dir(":/style/style/");
-    QFileInfoList info_list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
-//    ui->comboBox->clear();
-    ui->comboBox->addItem("default");
-    for(const auto& file_info:info_list){
-        ui->comboBox->addItem(file_info.baseName());
-    }
+    fillSkinParameters();
+    readSettings();
     updateSettings();
-
-    if(translator->load(QLocale(),"SBHelper","_",":/translation/translation")){
+    updateSkin();
+//    if(translator->load(QLocale(),"SBHelper","_",":/translation/translation")){
+    if(translator->load(fileNames[settings.languageIndex],translationDir)){
         qApp->installTranslator(translator);
     }
 }
@@ -41,7 +38,7 @@ DialogSkin::~DialogSkin()
     delete translator;
 }
 QString DialogSkin::getSkinName() const{
-    return ui->comboBox->currentText();
+    return ui->comboBox_Skin->currentText();
 }
 
 DialogSkin::Settings DialogSkin::getSettings() const
@@ -51,20 +48,9 @@ DialogSkin::Settings DialogSkin::getSettings() const
 
 void DialogSkin::accept()
 {
-    auto skin = this->getSkinName();
-    if(settings.skinIndex!=ui->comboBox->currentIndex()){
-        if(skin == tr("default")){
-            qApp->setStyleSheet("");
-        } else {
-            QFile qss(":/style/style/"+skin+".qss");
-            if(qss.open(QFile::ReadOnly)){
-                //a.setStyleSheet(QLatin1String(qss.readAll()));
-                qApp->setStyleSheet(qss.readAll());
-                qss.close();
-            } else {
-                QMessageBox::warning(nullptr, "warning", "Open failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-            }
-        }
+
+    if(settings.skinIndex!=ui->comboBox_Skin->currentIndex()){
+        updateSkin();
     }
     if(settings.languageIndex!=ui->comboBox_Lang->currentIndex()){
         auto current_index = ui->comboBox_Lang->currentIndex();
@@ -73,6 +59,7 @@ void DialogSkin::accept()
 
         }
     }
+    writeSettings();
     updateSettings();
     QDialog::accept();
 }
@@ -90,13 +77,59 @@ void DialogSkin::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
+void DialogSkin::fillSkinParameters()
+{
+    QDir dir(":/style/style/");
+    QFileInfoList info_list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+//    ui->comboBox->clear();
+    ui->comboBox_Skin->addItem("default");
+    for(const auto& file_info:info_list){
+        ui->comboBox_Skin->addItem(file_info.baseName());
+    }
+}
+
 void DialogSkin::updateSettings()
 {
     settings.languageIndex=ui->comboBox_Lang->currentIndex();
-    settings.skinIndex=ui->comboBox->currentIndex();
+    settings.skinIndex=ui->comboBox_Skin->currentIndex();
 }
 
 void DialogSkin::updateTranslation()
 {
-    ui->comboBox->setItemText(0,tr("default"));
+    ui->comboBox_Skin->setItemText(0,tr("default"));
+}
+
+void DialogSkin::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    ui->comboBox_Lang->setCurrentIndex(settings.value(ui->comboBox_Lang->objectName(),0).toInt());
+    ui->comboBox_Skin->setCurrentIndex(settings.value(ui->comboBox_Skin->objectName(),0).toInt());
+    settings.endGroup();
+}
+
+void DialogSkin::writeSettings()
+{
+    QSettings settings;
+    settings.beginGroup(this->objectName());
+    settings.setValue(ui->comboBox_Lang->objectName(),ui->comboBox_Lang->currentIndex());
+    settings.setValue(ui->comboBox_Skin->objectName(),ui->comboBox_Skin->currentIndex());
+    settings.endGroup();
+}
+
+void DialogSkin::updateSkin()
+{
+    auto skin = this->getSkinName();
+    if(skin == tr("default")){
+        qApp->setStyleSheet("");
+    } else {
+        QFile qss(":/style/style/"+skin+".qss");
+        if(qss.open(QFile::ReadOnly)){
+            //a.setStyleSheet(QLatin1String(qss.readAll()));
+            qApp->setStyleSheet(qss.readAll());
+            qss.close();
+        } else {
+            QMessageBox::warning(nullptr, "warning", "Open failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        }
+    }
 }

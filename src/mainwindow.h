@@ -44,6 +44,8 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void changeEvent(QEvent* event) override;
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
 
@@ -73,6 +75,9 @@ private:
     void create_signal_slots();
     void set_control_enable(bool enable);
     void set_GUI_enable(bool enable);
+
+    void readSettings();
+    void writeSettings();
 
 private slots:
     void on_clear_dict();

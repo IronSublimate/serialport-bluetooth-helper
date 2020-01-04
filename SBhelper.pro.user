@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2019-12-29T11:01:41. -->
+<!-- Written by QtCreator 4.11.0, 2020-01-04T11:20:10. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -506,8 +506,13 @@
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.DeployConfigurationCount">1</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.PluginSettings">
-    <value type="QString" key="AndroidDeviceSerialNumber">766e0868</value>
-    <value type="int" key="AndroidVersion.ApiLevel">29</value>
+    <valuelist type="QVariantList" key="AndroidDeviceAbis">
+     <value type="QString">arm64-v8a</value>
+     <value type="QString">armeabi-v7a</value>
+     <value type="QString">armeabi</value>
+    </valuelist>
+    <value type="QString" key="AndroidDeviceSerialNumber">QMS0216223022821</value>
+    <value type="int" key="AndroidVersion.ApiLevel">23</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.0">
     <value type="QString" key="Analyzer.Perf.CallgraphMode">dwarf</value>
@@ -572,6 +577,7 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SBhelper</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
@@ -856,6 +862,7 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SBhelper</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>

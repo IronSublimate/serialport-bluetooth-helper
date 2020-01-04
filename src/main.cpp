@@ -8,7 +8,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    QApplication::setOrganizationName("Beijing Insititute of Technology Smart Car CLub");
+    QApplication::setApplicationName("Serialport-Bluetooth-Helper");
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     MainWindow w;
     w.init();

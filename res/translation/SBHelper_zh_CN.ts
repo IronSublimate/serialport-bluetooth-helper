@@ -8,8 +8,8 @@
         <translation type="obsolete">皮肤</translation>
     </message>
     <message>
-        <location filename="../../src/dialogskin.cpp" line="55"/>
-        <location filename="../../src/dialogskin.cpp" line="100"/>
+        <location filename="../../src/dialogskin.cpp" line="57"/>
+        <location filename="../../src/dialogskin.cpp" line="102"/>
         <source>default</source>
         <translation>默认</translation>
     </message>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <location filename="../../gui/mainwindow.ui" line="542"/>
-        <location filename="../../src/mainwindow.cpp" line="369"/>
+        <location filename="../../src/mainwindow.cpp" line="412"/>
         <source>Start</source>
         <translation>开始</translation>
     </message>
@@ -357,66 +357,93 @@
         <translation type="vanished">默认</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="267"/>
+        <location filename="../../src/mainwindow.cpp" line="303"/>
         <source>Please Config before connect!</source>
         <translation>请先配置串口或蓝牙！</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="272"/>
+        <location filename="../../src/mainwindow.cpp" line="308"/>
         <source>Connecting...</source>
         <translation>连接中……</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="274"/>
+        <location filename="../../src/mainwindow.cpp" line="310"/>
         <source>Disconnect</source>
         <translation>关闭连接</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="278"/>
+        <location filename="../../src/mainwindow.cpp" line="314"/>
         <source>Connect failed!</source>
         <translation>连接失败！</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="282"/>
+        <location filename="../../src/mainwindow.cpp" line="318"/>
         <source>Connect</source>
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="372"/>
+        <location filename="../../src/mainwindow.cpp" line="415"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="455"/>
         <source>QCustomPlot Version: </source>
-        <translation type="unfinished">QCustomPlot版本： </translation>
+        <translation type="obsolete">QCustomPlot版本： </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="456"/>
         <source>QSS are from : </source>
-        <translation>QSS来自： </translation>
+        <translation type="vanished">QSS来自： </translation>
     </message>
     <message>
         <source>SerialPort-Bluetooth-helper</source>
         <translation type="vanished">串口蓝牙调试助手</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="452"/>
         <source>Hou Yuxuan</source>
-        <translation>侯宇轩</translation>
+        <translation type="vanished">侯宇轩</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="454"/>
         <source>Version: </source>
-        <translation>版本： </translation>
+        <translation type="vanished">版本： </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="452"/>
+        <source>Author: </source>
+        <translation type="vanished">作者： </translation>
+    </message>
+    <message>
+        <source>Source Code: </source>
+        <translation type="vanished">源码地址： </translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="8"/>
         <source>Author: </source>
         <translation>作者： </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="460"/>
+        <location filename="../../src/aboutThis.cpp" line="8"/>
+        <source>Hou Yuxuan</source>
+        <translation>侯宇轩</translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="10"/>
+        <source>Version: </source>
+        <translation>版本： </translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="11"/>
+        <source>QCustomPlot Version: </source>
+        <translation>QCustomPlot版本： </translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="12"/>
+        <source>QSS are from : </source>
+        <translation>QSS来自： </translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="16"/>
         <source>Source Code: </source>
         <translation>源码地址： </translation>
     </message>
@@ -424,99 +451,99 @@
 <context>
     <name>SerialSettingsDialog</name>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="125"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="126"/>
         <source>Description: %1</source>
         <translation>描述：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="126"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="127"/>
         <source>Manufacturer: %1</source>
         <translation>制造商：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="127"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="128"/>
         <source>Serial number: %1</source>
         <translation>串口号：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="128"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="129"/>
         <source>Location: %1</source>
         <translation>地址：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="129"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="130"/>
         <source>Vendor Identifier: %1</source>
         <translation>供应商标识符：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="130"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="131"/>
         <source>Product Identifier: %1</source>
         <translation>产品标识符：%1</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="172"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="173"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="180"/>
-        <location filename="../../src/serialsettingsdialog.cpp" line="192"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="183"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="197"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="181"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="184"/>
         <source>Even</source>
         <translation>偶校验</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="182"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="185"/>
         <source>Odd</source>
         <translation>奇校验</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="183"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="186"/>
         <source>Mark</source>
         <translation>标记校验</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="184"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="187"/>
         <source>Space</source>
         <translation>空校验</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="188"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="192"/>
         <source>1.5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="193"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="198"/>
         <source>RTS/CTS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="194"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="199"/>
         <source>XON/XOFF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="266"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="271"/>
         <source>Default (%1)</source>
         <comment>%1 = Bluetooth address</comment>
         <translation>默认(%1)</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="292"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="297"/>
         <source>custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="328"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="343"/>
         <source>Scanning...</source>
         <translation>扫描中……</translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="403"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="418"/>
         <source>Select the chat service to connect to.</source>
         <translation>选择一个蓝牙并连接。</translation>
     </message>
@@ -677,16 +704,16 @@
     <name>WidgetPainter</name>
     <message>
         <location filename="../../src/widgetpainter.cpp" line="50"/>
-        <source>鼠标位置</source>
-        <translation></translation>
+        <source>mouse position x:%1,y:%2</source>
+        <translation>鼠标位置 x:%1,y:%2</translation>
     </message>
     <message>
-        <location filename="../../src/widgetpainter.cpp" line="84"/>
+        <location filename="../../src/widgetpainter.cpp" line="86"/>
         <source>成功</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgetpainter.cpp" line="84"/>
+        <location filename="../../src/widgetpainter.cpp" line="86"/>
         <source>保存成功</source>
         <translation></translation>
     </message>

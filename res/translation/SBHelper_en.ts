@@ -4,8 +4,8 @@
 <context>
     <name>DialogSkin</name>
     <message>
-        <location filename="../../src/dialogskin.cpp" line="55"/>
-        <location filename="../../src/dialogskin.cpp" line="100"/>
+        <location filename="../../src/dialogskin.cpp" line="57"/>
+        <location filename="../../src/dialogskin.cpp" line="102"/>
         <source>default</source>
         <translation></translation>
     </message>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../../gui/mainwindow.ui" line="254"/>
         <source>查看图像</source>
-        <translation type="unfinished">Receive Image</translation>
+        <translation>Receive Image</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.ui" line="257"/>
@@ -183,7 +183,7 @@
     </message>
     <message>
         <location filename="../../gui/mainwindow.ui" line="542"/>
-        <location filename="../../src/mainwindow.cpp" line="369"/>
+        <location filename="../../src/mainwindow.cpp" line="412"/>
         <source>Start</source>
         <translation></translation>
     </message>
@@ -333,62 +333,65 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="267"/>
+        <location filename="../../src/mainwindow.cpp" line="303"/>
         <source>Please Config before connect!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="272"/>
+        <location filename="../../src/mainwindow.cpp" line="308"/>
         <source>Connecting...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="274"/>
+        <location filename="../../src/mainwindow.cpp" line="310"/>
         <source>Disconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="278"/>
+        <location filename="../../src/mainwindow.cpp" line="314"/>
         <source>Connect failed!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="282"/>
+        <location filename="../../src/mainwindow.cpp" line="318"/>
         <source>Connect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="372"/>
+        <location filename="../../src/mainwindow.cpp" line="415"/>
         <source>Stop</source>
         <translation></translation>
     </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="455"/>
-        <source>QCustomPlot Version: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="456"/>
-        <source>QSS are from : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="452"/>
-        <source>Hou Yuxuan</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="454"/>
-        <source>Version: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="452"/>
+        <location filename="../../src/aboutThis.cpp" line="8"/>
         <source>Author: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="460"/>
+        <location filename="../../src/aboutThis.cpp" line="8"/>
+        <source>Hou Yuxuan</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="10"/>
+        <source>Version: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="11"/>
+        <source>QCustomPlot Version: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="12"/>
+        <source>QSS are from : </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutThis.cpp" line="16"/>
         <source>Source Code: </source>
         <translation></translation>
     </message>
@@ -396,99 +399,99 @@
 <context>
     <name>SerialSettingsDialog</name>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="125"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="126"/>
         <source>Description: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="126"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="127"/>
         <source>Manufacturer: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="127"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="128"/>
         <source>Serial number: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="128"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="129"/>
         <source>Location: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="129"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="130"/>
         <source>Vendor Identifier: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="130"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="131"/>
         <source>Product Identifier: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="172"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="173"/>
         <source>Custom</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="180"/>
-        <location filename="../../src/serialsettingsdialog.cpp" line="192"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="183"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="197"/>
         <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="181"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="184"/>
         <source>Even</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="182"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="185"/>
         <source>Odd</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="183"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="186"/>
         <source>Mark</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="184"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="187"/>
         <source>Space</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="188"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="192"/>
         <source>1.5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="193"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="198"/>
         <source>RTS/CTS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="194"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="199"/>
         <source>XON/XOFF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="266"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="271"/>
         <source>Default (%1)</source>
         <comment>%1 = Bluetooth address</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="292"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="297"/>
         <source>custom</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="328"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="343"/>
         <source>Scanning...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/serialsettingsdialog.cpp" line="403"/>
+        <location filename="../../src/serialsettingsdialog.cpp" line="418"/>
         <source>Select the chat service to connect to.</source>
         <translation></translation>
     </message>
@@ -644,17 +647,21 @@
 <context>
     <name>WidgetPainter</name>
     <message>
-        <location filename="../../src/widgetpainter.cpp" line="50"/>
         <source>鼠标位置</source>
-        <translation>Mouse Position</translation>
+        <translation type="vanished">Mouse Position</translation>
     </message>
     <message>
-        <location filename="../../src/widgetpainter.cpp" line="84"/>
+        <location filename="../../src/widgetpainter.cpp" line="50"/>
+        <source>mouse position x:%1,y:%2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgetpainter.cpp" line="86"/>
         <source>成功</source>
         <translation>Success</translation>
     </message>
     <message>
-        <location filename="../../src/widgetpainter.cpp" line="84"/>
+        <location filename="../../src/widgetpainter.cpp" line="86"/>
         <source>保存成功</source>
         <translation>Save Successfully</translation>
     </message>
