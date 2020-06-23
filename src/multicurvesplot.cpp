@@ -49,6 +49,7 @@ void MultiCurvesPlot::addData(const QString &name, qreal value,int type)//0ä¸€ç›
         if(multiCurvesPlotPrivate->data.contains(name)){
             qreal time = (QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime)/1000.0;
             multiCurvesPlotPrivate->data[name]->addData(time, value);
+            type=1;
             if(type == 1){
 
             }
@@ -145,12 +146,14 @@ void MultiCurvesPlot::timerEvent(QTimerEvent *event)
 #if defined(WAVE_DEBUG) && WAVE_DEBUG
     if(event->timerId()==multiCurvesPlotPrivate->timerId){
         this->addData("wave0",gen_fake_wave_points("wave0"));
-        this->addData("wave1",gen_fake_wave_points("wave1",1));
+        this->addData("wave1",gen_fake_wave_points("wave1",15.7));
     }
 #endif
     if(event->timerId()==multiCurvesPlotPrivate->timerId and multiCurvesPlotPrivate->needRefresh){
         this->rescaleAxes();
+        this->xAxis->setRange(this->xAxis->range().upper, 5, Qt::AlignRight);
         this->replot();
+
         multiCurvesPlotPrivate->needRefresh = false;
         //qDebug()<<"MultiCurvesPlot::timerEvent";
     }
