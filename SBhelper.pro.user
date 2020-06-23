@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2020-01-04T11:20:10. -->
+<!-- Written by QtCreator 4.11.1, 2020-06-23T17:47:02. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">1</value>
+  <value type="int">0</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -577,7 +577,6 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SBhelper</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
@@ -862,7 +861,6 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SBhelper</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/code/qt/serialport-bluetooth-helper/serialport-bluetooth-helper/SBhelper.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>

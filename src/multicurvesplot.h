@@ -12,7 +12,7 @@ public:
 public:
     bool isStart();
 public slots:
-    void addData(const QString& name,qreal value);
+    void addData(const QString& name,qreal value,int type=0);//0一直增加，1固定长度，2触发
     void clear();
     void start();
     void stop();

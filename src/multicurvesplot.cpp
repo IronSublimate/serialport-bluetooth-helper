@@ -6,6 +6,8 @@
 #include <ciso646>
 #include <QVector3D>
 
+#define WAVE_DEBUG 1//生成虚假波形用于调试
+
 static inline QColor generateColor(){
     static QVector3D last_vec={255,255,255};
     while(1){
@@ -41,13 +43,15 @@ bool MultiCurvesPlot::isStart()
     return multiCurvesPlotPrivate->timerId>=0;
 }
 
-void MultiCurvesPlot::addData(const QString &name, qreal value)
+void MultiCurvesPlot::addData(const QString &name, qreal value,int type)//0一直增加(default)，1固定长度，2触发
 {
     if(multiCurvesPlotPrivate->timerId>=0){
         if(multiCurvesPlotPrivate->data.contains(name)){
-            multiCurvesPlotPrivate->data[name]->addData(
-                        (QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime)/1000.0,
-                        value);
+            qreal time = (QDateTime::currentDateTime().toMSecsSinceEpoch()-multiCurvesPlotPrivate->startTime)/1000.0;
+            multiCurvesPlotPrivate->data[name]->addData(time, value);
+            if(type == 1){
+
+            }
         } else {
             auto graph = this->addGraph();
             QPen pen(generateColor());
@@ -71,13 +75,14 @@ void MultiCurvesPlot::clear()
     }
 
     multiCurvesPlotPrivate->data.clear();
+    multiCurvesPlotPrivate->startTime=0;
     this->replot();
 }
 
 void MultiCurvesPlot::start()
 {
     if(multiCurvesPlotPrivate->timerId<0){
-        multiCurvesPlotPrivate->startTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        multiCurvesPlotPrivate->startTime += QDateTime::currentDateTime().toMSecsSinceEpoch();
         multiCurvesPlotPrivate->timerId = startTimer(multiCurvesPlotPrivate->interval);
         this->legend->setVisible(true);
     }
@@ -88,6 +93,9 @@ void MultiCurvesPlot::stop()
     killTimer(multiCurvesPlotPrivate->timerId);
     multiCurvesPlotPrivate->timerId = -1;
     this->legend->setVisible(false);
+    multiCurvesPlotPrivate->startTime -=
+            QDateTime::currentDateTime().toMSecsSinceEpoch();
+    //保存停止的时间，使得starttime为负值，在加入新点后当前时间-starttime为正值，就能从上次停止的位置开始
 }
 
 
@@ -119,8 +127,27 @@ void MultiCurvesPlot::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+#if defined(WAVE_DEBUG) && WAVE_DEBUG
+#include <QtMath>
+static inline qreal gen_fake_wave_points(const QString& name, qreal startValue=0){
+    static QMap<QString,qreal> map;
+    if(map.contains(name)){
+        ++map[name];
+    } else {
+        map[name]=startValue;
+    }
+    return qSin((map[name])/10);
+}
+#endif
+
 void MultiCurvesPlot::timerEvent(QTimerEvent *event)
 {
+#if defined(WAVE_DEBUG) && WAVE_DEBUG
+    if(event->timerId()==multiCurvesPlotPrivate->timerId){
+        this->addData("wave0",gen_fake_wave_points("wave0"));
+        this->addData("wave1",gen_fake_wave_points("wave1",1));
+    }
+#endif
     if(event->timerId()==multiCurvesPlotPrivate->timerId and multiCurvesPlotPrivate->needRefresh){
         this->rescaleAxes();
         this->replot();
