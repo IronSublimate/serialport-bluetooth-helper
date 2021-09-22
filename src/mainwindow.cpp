@@ -50,6 +50,10 @@ void MainWindow::init()
 #else
     change_gui_horizontal_screen();
 #endif
+    //设置控制界面和参数界面的左右占比
+    ui->splitter_other->setStretchFactor(0, 10);
+    ui->splitter_other->setStretchFactor(1, 1);
+
     ui->statusbar->addWidget(m_status);
     this->set_control_enable(false);
 
@@ -334,7 +338,7 @@ void MainWindow::on_actionConnect_triggered(bool checked)
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
+//#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     auto size = event->size();
     qDebug()<<size;
 
@@ -344,7 +348,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         change_gui_horizontal_screen();
     }
 
-#endif
+//#endif
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -373,6 +377,7 @@ void MainWindow::showStatusMessage(const QString &message)
 //横向屏幕的布局
 void MainWindow::change_gui_horizontal_screen()
 {
+    //改变控制界面的布局
     ui->widget_key->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     ui->rudder->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     ui->rudder->setAlignment(Qt::AlignCenter);
@@ -383,16 +388,19 @@ void MainWindow::change_gui_horizontal_screen()
     vlayout->addWidget(ui->widget_key);
     vlayout->addWidget(ui->rudder);
 
-    delete ui->tab_other->layout();
-    auto hlayout = new QHBoxLayout(ui->tab_other);
-    hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    hlayout->addWidget(ui->tabWidget_other);
-    hlayout->addWidget(ui->widget_control);
+    //delete ui->tab_other->layout();
+//    auto hlayout = new QHBoxLayout(ui->tab_other);
+//    hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
+//    hlayout->addWidget(ui->tabWidget_other);
+//    hlayout->addWidget(ui->widget_control);
+    ui->splitter_other->setOrientation(Qt::Horizontal);
+    //ui->tab_other->layout()->addWidget(ui->splitter_other);
 }
 
 //纵向屏幕的布局
 void MainWindow::change_gui_vertical_screen()
 {
+    //改变控制界面的布局
     ui->widget_key->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     ui->rudder->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     ui->rudder->setAlignment(Qt::AlignCenter);
@@ -403,11 +411,13 @@ void MainWindow::change_gui_vertical_screen()
     vlayout->addWidget(ui->widget_key);
     vlayout->addWidget(ui->rudder);
 
-    delete ui->tab_other->layout();
-    auto hlayout = new QVBoxLayout(ui->tab_other);
-    hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    hlayout->addWidget(ui->tabWidget_other);
-    hlayout->addWidget(ui->widget_control);
+//    delete ui->tab_other->layout();
+//    auto hlayout = new QVBoxLayout(ui->tab_other);
+//    hlayout->setObjectName(QString::fromUtf8("verticalLayout"));
+//    hlayout->addWidget(ui->tabWidget_other);
+//    hlayout->addWidget(ui->widget_control);
+    ui->splitter_other->setOrientation(Qt::Vertical);
+    //ui->tab_other->layout()->addWidget(ui->splitter_other);
 }
 
 
