@@ -24,8 +24,8 @@
 #include "serialsettingsdialog.h"
 
 //constants
-const QString QSTR_GEOMETRY("Geometry");
-const QString QSTR_STATE("State");
+const static QString QSTR_GEOMETRY("Geometry");
+const static QString QSTR_STATE("State");
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -120,6 +120,7 @@ void MainWindow::readSettings()
     ui->hexSending_checkBox->setChecked(settings.value(ui->hexSending_checkBox->objectName(),false).toBool());
     ui->hexShowing_checkBox->setChecked(settings.value(ui->hexShowing_checkBox->objectName(),false).toBool());
     ui->comboBox_codetype->setCurrentIndex(settings.value(ui->comboBox_codetype->objectName(),0).toInt());
+    ui->comboBox_lineSep->setCurrentIndex(settings.value(ui->comboBox_lineSep->objectName(),0).toInt());
     settings.endGroup();
 
     //图像模式
@@ -148,6 +149,7 @@ void MainWindow::writeSettings()
     settings.setValue(ui->hexSending_checkBox->objectName(),ui->hexSending_checkBox->isChecked());
     settings.setValue(ui->hexShowing_checkBox->objectName(),ui->hexShowing_checkBox->isChecked());
     settings.setValue(ui->comboBox_codetype->objectName(),ui->comboBox_codetype->currentIndex());
+    settings.setValue(ui->comboBox_lineSep->objectName(),ui->comboBox_lineSep->currentIndex());
     settings.endGroup();
 
     //图像模式
@@ -253,7 +255,15 @@ void MainWindow::on_control_key_release()
 
 void MainWindow::on_Send_Button_clicked()
 {
-    this->iodevice.com_send_data(ui->textEdit_Send->toPlainText(),
+    auto text = ui->textEdit_Send->toPlainText();
+    auto index = this->ui->comboBox_lineSep->currentIndex();
+    if (index == 1) {
+        text.replace(QChar('\n'), QChar('\r'));
+    } else if(index==2){
+        text.replace(QChar('\n'), QString("\r\n"));
+    }
+    qDebug() << text;
+    this->iodevice.com_send_data(text,
                        ui->hexSending_checkBox->isChecked(),
                        ui->comboBox_codetype->currentText());
 

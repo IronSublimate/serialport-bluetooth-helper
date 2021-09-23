@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>736</height>
+    <width>489</width>
+    <height>755</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -92,6 +92,25 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_lineSep">
+            <item>
+             <property name="text">
+              <string notr="true">LF(\n)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">CR(\r)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">CRLF(\r\n)</string>
+             </property>
+            </item>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="hexSending_checkBox">
@@ -821,8 +840,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>498</width>
-     <height>26</height>
+     <width>489</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

@@ -143,6 +143,9 @@ void IODevice::com_send_data(const QString &tx_data, bool is_hex,const QString &
     if(tx_data.length()==0){
         return ;
     }
+    if(this->device==nullptr){
+        return;
+    }
     if(not is_hex){
         QByteArray ss;
         if(codetype=="utf-8"){
